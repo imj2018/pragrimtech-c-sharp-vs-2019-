@@ -6,7 +6,13 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //string Name = "\"Pragim\"";
+            //string Name = "One\nTwo\nThree";
+            //string Name = "C:\\Pragim\\DotNet\\Training\\Csharp";
+            string Name = @"C:\Pragim\DotNet\Training\Csharp";
+
+            Console.WriteLine(Name);
+
         }
     }
 }
