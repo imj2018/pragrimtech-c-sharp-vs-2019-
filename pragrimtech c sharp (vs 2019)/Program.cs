@@ -6,43 +6,32 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            string Name = null;
+            //int i = 100;
 
-            //int i = null; 
-            int? i = null;
+            //float f = i;
 
-            bool? AreyouMajor = null;
+            float f = 12373473777388788.45f;
 
-            //if (AreyouMajor.Value)
-            if (AreyouMajor == true)
+            //int i = (int)f;
+            //int i = Convert.ToInt32(f); // type cast operator or convert class to throw exception
+
+            //string strNumber = "100";
+            //string strNumber = "100tg";
+            string strNumber = "100"; 
+            int result = 0;
+
+            bool isConversionSuccesful = int.TryParse(strNumber, out result);
+            //int i = int.Parse(strNumber); 
+
+            if (isConversionSuccesful)
             {
-                Console.WriteLine("User is Major");
-            }
-            else if (!AreyouMajor == false)
-            {
-                Console.WriteLine("User is NOT Major");
-
+                Console.WriteLine(result);
             }
             else
             {
-                Console.WriteLine("User did answer the Question");
+                Console.WriteLine("Please enter a valid number");
             }
 
-
-            int? TicketsOnSale = null;
-            int AvailableTickets = TicketsOnSale ?? 0; // ?? null coalescing operator 
-
-            //if (TicketsOnSale == null)
-            //{
-            //    AvailableTickets = 0;
-            //}
-            //else
-            //{
-            //    //AvailableTickets = TicketsOnSale.Value;
-            //    AvailableTickets = (int)TicketsOnSale; // convert nullable (int?) to non nullable, cannot hold null
-            //}
-
-            Console.WriteLine("AvailableTickets = {0}", AvailableTickets);
 
         }
     }
