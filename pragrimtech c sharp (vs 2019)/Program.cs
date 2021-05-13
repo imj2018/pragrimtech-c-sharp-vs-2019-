@@ -6,31 +6,21 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            //int i = 100;
+            string numbertwo = "2";
+            int result;
+            int.TryParse(numbertwo, out result);
 
-            //float f = i;
+            int[] EvenNumbers = new int[3];
+            int[] OddNumbers = { 1, 3, 5, };
 
-            float f = 12373473777388788.45f;
+            EvenNumbers[0] = 0;
+            EvenNumbers[1] = result;
+            EvenNumbers[2] = 4;
+            //EvenNumbers[3] = 6; // can't grow in size over time/once initialized
 
-            //int i = (int)f;
-            //int i = Convert.ToInt32(f); // type cast operator or convert class to throw exception
+            Console.WriteLine(EvenNumbers[1]);
+            //Console.WriteLine(EvenNumbers[10]);
 
-            //string strNumber = "100";
-            //string strNumber = "100tg";
-            string strNumber = "100"; 
-            int result = 0;
-
-            bool isConversionSuccesful = int.TryParse(strNumber, out result);
-            //int i = int.Parse(strNumber); 
-
-            if (isConversionSuccesful)
-            {
-                Console.WriteLine(result);
-            }
-            else
-            {
-                Console.WriteLine("Please enter a valid number");
-            }
 
 
         }
