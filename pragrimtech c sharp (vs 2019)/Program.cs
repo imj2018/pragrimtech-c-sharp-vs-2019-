@@ -6,39 +6,43 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            int Numerator = 10;
-            int Denominator = 2;
+            string Name = null;
 
-            //int Result = Numerator / Denominator;
-            int Result = Numerator % Denominator;
+            //int i = null; 
+            int? i = null;
 
-            int Number = 10;
-            int AnotherNumber = 20;
-            //if (Number == 10)
-            //if (Number != 10)
-            //if (Number == 10 && AnotherNumber == 20)
-            if (Number == 10 || AnotherNumber == 20)
+            bool? AreyouMajor = null;
+
+            //if (AreyouMajor.Value)
+            if (AreyouMajor == true)
             {
-                Console.WriteLine("Hello");
+                Console.WriteLine("User is Major");
+            }
+            else if (!AreyouMajor == false)
+            {
+                Console.WriteLine("User is NOT Major");
+
+            }
+            else
+            {
+                Console.WriteLine("User did answer the Question");
             }
 
-            Console.WriteLine("Result = {0}", Result);
 
-            int Number10 = 15;
-            bool IsNumber10 = Number10 == 10 ? true : false;
+            int? TicketsOnSale = null;
+            int AvailableTickets = TicketsOnSale ?? 0; // ?? null coalescing operator 
 
-            //if (Number10 == 10)
+            //if (TicketsOnSale == null)
             //{
-            //    IsNumber10 = true;
+            //    AvailableTickets = 0;
             //}
             //else
             //{
-            //    IsNumber10 = false;
+            //    //AvailableTickets = TicketsOnSale.Value;
+            //    AvailableTickets = (int)TicketsOnSale; // convert nullable (int?) to non nullable, cannot hold null
             //}
 
-            Console.WriteLine("Number == 10 is {0}", IsNumber10);
-
-
+            Console.WriteLine("AvailableTickets = {0}", AvailableTickets);
 
         }
     }
