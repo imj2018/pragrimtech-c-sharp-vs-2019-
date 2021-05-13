@@ -6,12 +6,39 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            //string Name = "\"Pragim\"";
-            //string Name = "One\nTwo\nThree";
-            //string Name = "C:\\Pragim\\DotNet\\Training\\Csharp";
-            string Name = @"C:\Pragim\DotNet\Training\Csharp";
+            int Numerator = 10;
+            int Denominator = 2;
 
-            Console.WriteLine(Name);
+            //int Result = Numerator / Denominator;
+            int Result = Numerator % Denominator;
+
+            int Number = 10;
+            int AnotherNumber = 20;
+            //if (Number == 10)
+            //if (Number != 10)
+            //if (Number == 10 && AnotherNumber == 20)
+            if (Number == 10 || AnotherNumber == 20)
+            {
+                Console.WriteLine("Hello");
+            }
+
+            Console.WriteLine("Result = {0}", Result);
+
+            int Number10 = 15;
+            bool IsNumber10 = Number10 == 10 ? true : false;
+
+            //if (Number10 == 10)
+            //{
+            //    IsNumber10 = true;
+            //}
+            //else
+            //{
+            //    IsNumber10 = false;
+            //}
+
+            Console.WriteLine("Number == 10 is {0}", IsNumber10);
+
+
 
         }
     }
