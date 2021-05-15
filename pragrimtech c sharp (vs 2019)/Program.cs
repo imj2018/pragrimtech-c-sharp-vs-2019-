@@ -6,44 +6,47 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please enter a number");
-            int UserNumber = int.Parse(Console.ReadLine());
+            int TotalCoffeeCost = 0;
 
-            //if (UserNumber == 10)
-            //{
-            //    Console.WriteLine("Your number is 10");
-            //}
-            //else if (UserNumber == 10)
-            //{
-            //    Console.WriteLine("Your number is 10");
-            //}
-            //else if (UserNumber == 10)
-            //{
-            //    Console.WriteLine("Your number is 10");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Your number is not 10, 20 or 30");
-            //}
+            Start: // label, jump back to here if Yes
+            Console.WriteLine("Please select your coffee: 1 - Small, 2 - Medium, 3 - Large");
+            int UserChoice = int.Parse(Console.ReadLine());
 
-            switch (UserNumber)
+            switch (UserChoice)
             {
-                //case 10:
-                //    Console.WriteLine("You number is 10");
-                //    break;
-                //case 20:
-                //    Console.WriteLine("You number is 20");
-                //    break;
-                case 10:
-                case 20:
-                case 30:
-                    //Console.WriteLine("You number is 30");
-                    Console.WriteLine("You number is {0}", UserNumber);
+                case 1:
+                    TotalCoffeeCost += 1;
+                    break;
+                case 2:
+                    TotalCoffeeCost += 2;
+                    break;
+                case 3:
+                    TotalCoffeeCost += 3;
                     break;
                 default:
-                    Console.WriteLine("You number is not 10, 20 or 30");
-                    break;
+                    Console.WriteLine("Your choice {0} is invalid", UserChoice);
+                    goto Start;
             }
+
+            Decide:
+            Console.WriteLine("Do you want to buy another coffee - Yes or No?");
+            string UserDecision = Console.ReadLine().ToUpper();
+            
+            switch (UserDecision)
+            {
+                case "YES":
+                    goto Start;
+                case "NO":
+                    break;
+                default:
+                    Console.WriteLine("Your choice {0} is invalid. Please try again...", UserDecision);
+                    goto Decide;
+            }
+
+            Console.WriteLine("Thank you for shopping with us");
+            Console.WriteLine("Bill Amount = {0}", TotalCoffeeCost);
+             
+
         }
     }
 }
