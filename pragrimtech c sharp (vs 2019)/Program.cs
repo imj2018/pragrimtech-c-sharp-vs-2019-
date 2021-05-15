@@ -6,46 +6,17 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            int TotalCoffeeCost = 0;
+            Console.WriteLine("Please enter your target");
+            int UserTarget = int.Parse(Console.ReadLine());
 
-            Start: // label, jump back to here if Yes
-            Console.WriteLine("Please select your coffee: 1 - Small, 2 - Medium, 3 - Large");
-            int UserChoice = int.Parse(Console.ReadLine());
+            int Start = 0;
 
-            switch (UserChoice)
+            while (Start <= UserTarget)
             {
-                case 1:
-                    TotalCoffeeCost += 1;
-                    break;
-                case 2:
-                    TotalCoffeeCost += 2;
-                    break;
-                case 3:
-                    TotalCoffeeCost += 3;
-                    break;
-                default:
-                    Console.WriteLine("Your choice {0} is invalid", UserChoice);
-                    goto Start;
+                Console.Write(Start + " ");
+                Start += 2;
             }
 
-            Decide:
-            Console.WriteLine("Do you want to buy another coffee - Yes or No?");
-            string UserDecision = Console.ReadLine().ToUpper();
-            
-            switch (UserDecision)
-            {
-                case "YES":
-                    goto Start;
-                case "NO":
-                    break;
-                default:
-                    Console.WriteLine("Your choice {0} is invalid. Please try again...", UserDecision);
-                    goto Decide;
-            }
-
-            Console.WriteLine("Thank you for shopping with us");
-            Console.WriteLine("Bill Amount = {0}", TotalCoffeeCost);
-             
 
         }
     }
