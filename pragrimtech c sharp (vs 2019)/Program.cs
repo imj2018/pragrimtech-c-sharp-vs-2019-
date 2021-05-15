@@ -6,17 +6,36 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please enter your target");
-            int UserTarget = int.Parse(Console.ReadLine());
+            string UserChoice = string.Empty;
 
-            int Start = 0;
-
-            while (Start <= UserTarget)
+            do 
             {
-                Console.Write(Start + " ");
-                Start += 2;
-            }
+                Console.WriteLine("Please enter your target?");
+                int UserInput;
+                bool UserTarget = int.TryParse(Console.ReadLine(), out UserInput);
 
+                int Start = 0;
+
+                while (Start <= UserInput)
+                {
+                    Console.Write(Start + " ");
+                    Start += 2;
+                }
+
+                do // loop/prompt until user enters Yes or No i.e will stay in loop until Yes or No
+                {
+                    Console.WriteLine("Do you want to continue - Yes or No");
+                    UserChoice = Console.ReadLine().ToUpper();
+
+                    if (UserChoice != "YES" && UserChoice != "NO")
+                    {
+                        Console.WriteLine("Invalid Choice, please say Yes or No");
+                    }
+
+                } 
+                while (UserChoice != "YES" && UserChoice != "NO"); 
+            } 
+            while (UserChoice == "YES");
 
         }
     }
