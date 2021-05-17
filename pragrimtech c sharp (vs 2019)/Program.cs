@@ -6,36 +6,75 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         static void Main(string[] args)
         {
-            string UserChoice = string.Empty;
-
-            do 
+            int[] Numbers = new int[]
             {
-                Console.WriteLine("Please enter your target?");
-                int UserInput;
-                bool UserTarget = int.TryParse(Console.ReadLine(), out UserInput);
+                101,
+                102,
+                103,
+                104
+            };
 
-                int Start = 0;
+            // take each element out of collection and put in variable (item)
+            foreach (var item in Numbers) 
+            {
+                Console.WriteLine(item);
+            }
 
-                while (Start <= UserInput)
+
+            Console.WriteLine("remainder is " + 0 % 2);
+            Console.WriteLine("remainder is " + 1 % 2);
+            Console.WriteLine("remainder is " + 2 % 2);
+            Console.WriteLine("remainder is " + 3 % 2);
+            Console.WriteLine("remainder is " + 4 % 2);
+
+            //for (int i = 1; i <= 10; i+=2)
+            for (int i = 0; i <= 20; i++)
+            {
+                // for every off number condition is true
+                // 0 ÷ 2 remainder 0
+                // 1 ÷ 2 has a remainder so continue i.e skip there rest of loop and go back to the start
+                // 2 ÷ 2 has no remainder skip etc
+                if (i % 2 == 1) 
                 {
-                    Console.Write(Start + " ");
-                    Start += 2;
+                    continue;
                 }
+                Console.WriteLine(i);
+            }
 
-                do // loop/prompt until user enters Yes or No i.e will stay in loop until Yes or No
+
+            for (int i = 1; i <= 10; i++)
+            {
+                Console.WriteLine(i);
+                if (i == 20)
                 {
-                    Console.WriteLine("Do you want to continue - Yes or No");
-                    UserChoice = Console.ReadLine().ToUpper();
+                    // control will get out of loop
+                    break; 
+                }
+            }
 
-                    if (UserChoice != "YES" && UserChoice != "NO")
-                    {
-                        Console.WriteLine("Invalid Choice, please say Yes or No");
-                    }
 
-                } 
-                while (UserChoice != "YES" && UserChoice != "NO"); 
-            } 
-            while (UserChoice == "YES");
+            for (int i = 0; i < Numbers.Length; i++)
+            {
+                if (Numbers[i] == Numbers[2])
+                {
+                    Console.WriteLine("at element 3");
+                }
+                Console.WriteLine(Numbers[i]);
+            }
+
+
+            int counter = 0;
+
+            // length of array 3
+            while (counter < Numbers.Length) 
+            {
+                Console.WriteLine(Numbers[counter] + " ");
+                counter++;
+            }
+
+
+
+  
 
         }
     }
