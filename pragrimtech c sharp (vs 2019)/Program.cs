@@ -6,29 +6,47 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            int i = 0;
-            //SimpleMethod(i); // pass by value, pointing to different memery location, 0 is copied into variable
-            SimpleMethod(ref i); // i and j are pointing to same memory location, though i is set to 0 j is setting it to 101
-
-            Console.WriteLine(i);
-
             int Total = 0;
             int Product = 0;
             Calculate(10, 20, out Total, out Product);
 
-            Console.WriteLine("Sum = {0} and Product = {1}", Total, Product);
+            Console.WriteLine("Sum = {0} and Product - {1}", Total, Product);
+
+
+            int[] Numbers = new int[3]
+            {
+                101,
+                102,
+                103
+            };
+
+            ParamsMethod();
+            ParamsMethod(Numbers);         
+            ParamsMethod(1, 2, 3, 4, 5); 
+
         }
 
-        //public static void SimpleMethod(int j)
-        public static void SimpleMethod(ref int j)
+        // output parameters when returning multiple values
+        public static void Calculate(int FN, int SN, out int Sum, out int Product) 
         {
-            j = 101;
+            Sum = FN + SN;
+            Product = FN * SN;
         }
 
-        public static void Calculate(int fn, int sn, out int Sum, out int Product)
+        //public static void ParamsMethod(int[] Numbers)
+        // params keyword makes parameter optional
+        // params can pass element values
+        // must be the last parameter e.g ParamsMethod(int X, params int[] Numbers)
+        // cannot have multiple ParamsMethod(params int[] Numbers, params string[] Names)
+        public static void ParamsMethod(params int[] Numbers)
         {
-            Sum = fn + sn;
-            Product = fn * sn;
+            Console.WriteLine("There are {0} elements", Numbers.Length);
+            foreach (var item in Numbers)
+            {
+                Console.WriteLine(item);
+            }
         }
+
+
     }
 }
