@@ -6,4 +6,9 @@
     <RootNamespace>pragrimtech_c_sharp__vs_2019_</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectA.TeamA\ProjectA.TeamA.csproj" />
+    <ProjectReference Include="..\ProjectA.TeamB\ProjectA.TeamB.csproj" />
+  </ItemGroup>
+
 </Project>
