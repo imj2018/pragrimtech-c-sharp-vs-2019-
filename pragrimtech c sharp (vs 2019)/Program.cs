@@ -5,54 +5,81 @@ using System.Collections.Generic;
 using ProjectA.TeamA;
 using ProjectA.TeamB;
 
+
+
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    class Customer
+    class Circle
     {
-        public string _firstName;
-        public string _lastName;
+        //float _Pi = 3.141f; // instance member
 
-        // default constructor that can be useful for no parameters
-        public Customer() : this("No FirstName Provided", "No LastName Provided")
+        // as Pi does not change value it can be set to static, there will always be just one copy in memory to be shared
+        //static float _Pi = 3.141f;
+        //static float _Pi;
+        public static float _Pi;
+
+        int _Radius;
+
+        // static constructors cannot be public (cannot use access modifiers) anything in a class not public by default
+        // is set to private and can only be accessed within the class
+        // static constructors can be used to inilitialize static fields
+        static Circle()
         {
-
+            Console.WriteLine("Static Constructor Called");
+            _Pi = 3.141f;
         }
 
-        // .net has a default constructor with no parameters (if no constructor is declared)
-        // overloading constructors
-        public Customer(string FirstName, string LastName)
+        public Circle(int Radius)
         {
-            this._firstName = FirstName;
-            this._lastName = LastName;
+            Console.WriteLine("Instance Constructor Called");
+            this._Radius = Radius;
         }
 
-        public void PrintFullName()
+        public static void Print()
         {
-            Console.WriteLine("Full Name = {0}", this._firstName + " " + this._lastName);
+            //
         }
 
-        // destructor, to manually clean up resources as opposed to garbage collector
-        ~Customer()
+        public float CalculateArea()
         {
-
+            //return this._Pi * _Radius * _Radius;
+            return Circle._Pi * _Radius * _Radius;
         }
+
+        public float CalculateCircumference()
+        {
+            return Circle._Pi * 2 * _Radius;
+        }
+
     }
     class Program
     {
         public static void Main()
         {
-            //Customer C1 = new Customer("Pragim", "Technologies");
-            Customer C1 = new Customer();
-            C1.PrintFullName();
+            Circle C1 = new Circle(4);
+            float area = C1.CalculateArea();
 
-            Customer C2 = new Customer("Joe", "Smith");
-            C2.PrintFullName();
+            // static members are invoked using the name 
+            //Circle.Print();
+            float circumference = C1.CalculateCircumference();
+            Console.WriteLine(area);
+            Console.WriteLine(circumference);
+
+            // if there is no change on a pair object basis it should be converted to static as the value of pi will not change
+            Circle c2 = new Circle(6);
+            float area2 = c2.CalculateArea();
+            float circumference2 = c2.CalculateCircumference();
+            Console.WriteLine(area2);
+            Console.WriteLine(circumference2);
+
+            // for testing purposes, this shows the static constructor is called first, before an instance constructor or any
+            // static fields
+            //Console.WriteLine(Circle._Pi);
+
 
         }
-
     }
-
- }
+}
 
 
 
