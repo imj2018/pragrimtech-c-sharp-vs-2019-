@@ -9,73 +9,89 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    class Circle
+
+    // when a child/derived object is created a base class instance is created first
+    // the constructor of the base class is called first
+    // e.g PrintFullName() is an instance member (not static) of the base class 
+    public class ParentClass
     {
-        //float _Pi = 3.141f; // instance member
-
-        // as Pi does not change value it can be set to static, there will always be just one copy in memory to be shared
-        //static float _Pi = 3.141f;
-        //static float _Pi;
-        public static float _Pi;
-
-        int _Radius;
-
-        // static constructors cannot be public (cannot use access modifiers) anything in a class not public by default
-        // is set to private and can only be accessed within the class
-        // static constructors can be used to inilitialize static fields
-        static Circle()
+        public ParentClass()
         {
-            Console.WriteLine("Static Constructor Called");
-            _Pi = 3.141f;
+            Console.WriteLine("ParentClass Constructor called");
         }
 
-        public Circle(int Radius)
+        public ParentClass(string Message)
         {
-            Console.WriteLine("Instance Constructor Called");
-            this._Radius = Radius;
+            Console.WriteLine(Message);
         }
+    }
 
-        public static void Print()
+    public class ChildClass : ParentClass
+    {
+        // to choose the constructor from the parent the base keyword can be used
+        // intellisense will show whih constructor to choose from
+        public ChildClass() : base("Derived class controlling Parent class constructor called")
         {
-            //
+            Console.WriteLine("ChildClass Constructor called");
         }
+    }
 
-        public float CalculateArea()
-        {
-            //return this._Pi * _Radius * _Radius;
-            return Circle._Pi * _Radius * _Radius;
-        }
+    public class Employee
+    {
+        public string FirstName;
+        public string LastName;
+        public string Email;
 
-        public float CalculateCircumference()
+        public void PrintFullName()
         {
-            return Circle._Pi * 2 * _Radius;
+            Console.WriteLine(FirstName + " " + LastName);
         }
 
     }
+
+    // analogy like derived class is comparitive to a general surgeon to specialized doctor,
+    // at times can e.g a gynecologist can do there gynocology things but also perform general surgery  
+    public class FullTimeEmployee : Employee
+    {
+        public float YearlySalary;
+    }
+
+    // only single class inheritance allowed
+    //public class PartTimeEmployee : Employee, A
+    public class PartTimeEmployee : Employee
+    {
+        public float HourlyRate;
+    }
+
+    // multilevel class inheritance
+    // class A will have the code from PartTimeEmployee and Employee
+    public class A : PartTimeEmployee
+    {
+
+    }
+
     class Program
     {
         public static void Main()
         {
-            Circle C1 = new Circle(4);
-            float area = C1.CalculateArea();
 
-            // static members are invoked using the name 
-            //Circle.Print();
-            float circumference = C1.CalculateCircumference();
-            Console.WriteLine(area);
-            Console.WriteLine(circumference);
+            FullTimeEmployee FTE = new FullTimeEmployee();
+            FTE.FirstName = "Pragim";
+            FTE.LastName = "Tech";
+            FTE.PrintFullName();
+            FTE.YearlySalary = 50000;
 
-            // if there is no change on a pair object basis it should be converted to static as the value of pi will not change
-            Circle c2 = new Circle(6);
-            float area2 = c2.CalculateArea();
-            float circumference2 = c2.CalculateCircumference();
-            Console.WriteLine(area2);
-            Console.WriteLine(circumference2);
+            PartTimeEmployee PTE = new PartTimeEmployee();
+            PTE.FirstName = "Partime";
+            PTE.LastName = "Guy";
+            PTE.PrintFullName();
+            PTE.HourlyRate = 40;
 
-            // for testing purposes, this shows the static constructor is called first, before an instance constructor or any
-            // static fields
-            //Console.WriteLine(Circle._Pi);
+            A A1 = new A();
+            A1.FirstName = "multi";
+            A1.HourlyRate = 40;
 
+            ChildClass CC = new ChildClass();
 
         }
     }
