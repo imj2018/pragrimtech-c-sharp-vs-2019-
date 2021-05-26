@@ -9,80 +9,34 @@ using ProjectA.TeamB;
 namespace pragrimtech_c_sharp__vs_2019_
 {
 
-    public class Employee
+    public class BaseClass
     {
-        public string FirstName = "FN";
-        public string LastName = "LN";
-
-        // PrintFullName will only be called from the parent unless the base is marked
-        //  as virtual, this indicates to derived classes that they can override base implementation
-        public virtual void PrintFullName()
+        public virtual void Print()
         {
-            Console.WriteLine(FirstName + " " + LastName);
+            Console.WriteLine("I am a Base Class Print Method");
         }
     }
 
-    public class PartTimeEmployee : Employee
+    public class DerivedClass : BaseClass
     {
-        //public void PrintFullName()
-        //{
-        //    Console.WriteLine(FirstName + " " + LastName + " - Part Time");
-        //}
-
-        // can type override space and it will show via intellisense
-        public override void PrintFullName()
+        //public override void Print()
+        public new void Print() // hiding
         {
-            Console.WriteLine(FirstName + " " + LastName + " - Part Time");
+            Console.WriteLine("I am a Derived Class Print Method");
         }
-    }
-
-    public class FullTimeEmployee : Employee
-    {
-        public override void PrintFullName()
-        {
-            Console.WriteLine(FirstName + " " + LastName + " - Full Time");
-        }
-    }
-
-    public class TemporaryEmployee : Employee
-    {
-        public override void PrintFullName()
-        {
-            Console.WriteLine(FirstName + " " + LastName + " - Temporary Time");
-        }
-
     }
 
     public class Program
     {
         public static void Main()
         {
-            // polymorphism allows you to invoke derived class methods using a base class reference
-            // variables at runtime i.e Employee as the base class variable with a PrintFullName method but using
-            // PartTimeEmployee's derived class PrintFullName method instead 
+            // to reiterate a base class reference variable points to a derived class object
+            // if  a method is overriden in the derived class it will be invoked instead of the base class
+            BaseClass B = new DerivedClass();
+            B.Print();
 
-            // to reiterate a base class variable can point to a child object i.e the array is of type
-            // Employee with child elements
-            // even though each derived class has its own PrintFullName i.e hidden, the variable is the 
-            // parent class therefore it will use the parent method therefore needs to be overriden
-            //
-            Employee[] employees = new Employee[4]
-            {
-                //employees[0] = new Employee(),
-                //employees[1] = new PartTimeEmployee(),
-                //employees[2] = new FullTimeEmployee(),
-                //employees[3] = new TemporaryEmployee()
-
-                new Employee(),
-                new PartTimeEmployee(),
-                new FullTimeEmployee(),
-                new TemporaryEmployee()
-            };
-
-            foreach (Employee employee in employees)
-            {
-                employee.PrintFullName();
-            }
+            DerivedClass D = new DerivedClass();
+            D.Print();
 
 
         }
