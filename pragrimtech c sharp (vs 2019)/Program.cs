@@ -11,53 +11,79 @@ namespace pragrimtech_c_sharp__vs_2019_
 
     public class Employee
     {
-        public string FirstName;
-        public string LastName;
-        public string Email;
+        public string FirstName = "FN";
+        public string LastName = "LN";
 
-        public void PrintFullName()
+        // PrintFullName will only be called from the parent unless the base is marked
+        //  as virtual, this indicates to derived classes that they can override base implementation
+        public virtual void PrintFullName()
         {
             Console.WriteLine(FirstName + " " + LastName);
         }
     }
 
-    public class FullTimeEmployee : Employee
+    public class PartTimeEmployee : Employee
     {
-        // this will hide the parent method with the same name
-        // this will be invoked not the parent
-        // use the new keyword if hiding is intentional
-        public new void PrintFullName()
+        //public void PrintFullName()
+        //{
+        //    Console.WriteLine(FirstName + " " + LastName + " - Part Time");
+        //}
+
+        // can type override space and it will show via intellisense
+        public override void PrintFullName()
         {
-            Console.WriteLine(FirstName + " " + LastName + " Contractor");
-            // call the base class method
-            //base.PrintFullName();
+            Console.WriteLine(FirstName + " " + LastName + " - Part Time");
         }
     }
 
-    public class PartTimeEmployee : Employee
+    public class FullTimeEmployee : Employee
     {
-        //
+        public override void PrintFullName()
+        {
+            Console.WriteLine(FirstName + " " + LastName + " - Full Time");
+        }
+    }
+
+    public class TemporaryEmployee : Employee
+    {
+        public override void PrintFullName()
+        {
+            Console.WriteLine(FirstName + " " + LastName + " - Temporary Time");
+        }
+
     }
 
     public class Program
     {
         public static void Main()
         {
-            //FullTimeEmployee FTE = new FullTimeEmployee();
-            // assign the child to a reference of parent, this will now call the PrintFullName of the parent
-            // not the PartTimeEmployee method
-            Employee FTE = new FullTimeEmployee();
-            FTE.FirstName = "mr full time";
-            FTE.LastName = "employee";
+            // polymorphism allows you to invoke derived class methods using a base class reference
+            // variables at runtime i.e Employee as the base class variable with a PrintFullName method but using
+            // PartTimeEmployee's derived class PrintFullName method instead 
 
-            // type case to convert to Employee 
-            //((Employee)FTE).PrintFullName();
+            // to reiterate a base class variable can point to a child object i.e the array is of type
+            // Employee with child elements
+            // even though each derived class has its own PrintFullName i.e hidden, the variable is the 
+            // parent class therefore it will use the parent method therefore needs to be overriden
+            //
+            Employee[] employees = new Employee[4]
+            {
+                //employees[0] = new Employee(),
+                //employees[1] = new PartTimeEmployee(),
+                //employees[2] = new FullTimeEmployee(),
+                //employees[3] = new TemporaryEmployee()
 
+                new Employee(),
+                new PartTimeEmployee(),
+                new FullTimeEmployee(),
+                new TemporaryEmployee()
+            };
 
-            PartTimeEmployee PTE = new PartTimeEmployee();
-            PTE.FirstName = "mr part time";
-            PTE.LastName = "employee";
-            PTE.PrintFullName();
+            foreach (Employee employee in employees)
+            {
+                employee.PrintFullName();
+            }
+
 
         }
     }
