@@ -10,59 +10,90 @@ namespace pragrimtech_c_sharp__vs_2019_
 {
     public class Student
     {
-        // encapsulation
         private int _id;
         private string _name;
-
-        // as there is only a get method/return it is essentially readonly
         private int _passMark = 35;
+        //private string _city;
+        //private string _email;
 
-        public int GetPassMark()
+
+        //public string City
+        //{
+        //    get
+        //    {
+        //        return this._city;
+        //    }
+        //    set
+        //    {
+        //        this._city = value;
+        //    }
+        //}
+
+        //public string Email
+        //{
+        //    get
+        //    {
+        //        return this._email;
+        //    }
+        //    set
+        //    {
+        //        this._email = value;
+        //    }
+        //}
+
+        // compiler creates fields behined the scenes
+        public string City
         {
-            return this._passMark;
+            get;
+            set;
         }
 
-        public void SetName(string Name)
+        public string Email { get; set; }
+
+
+
+        public int PassMark
         {
-            if (string.IsNullOrEmpty(Name))
+            // only get accessory so readonly
+            get
             {
-                throw new Exception("Name cannot be null or empty");
-            }
-            else
-            {
-                this._name = Name;
+                return this._passMark;
             }
         }
 
-        public string GetName()
+        public string Name // read, write property
         {
-            return string.IsNullOrEmpty(this._name) ? "No Name" : this._name;
-
-            //if (string.IsNullOrEmpty(this._name))
-            //{
-            //    return "No Name";
-            //}
-            //else
-            //{
-            //    return this._name;
-            //}
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new Exception("Name cannot be null or empty");
+                }
+                this._name = value;
+            }
+            get
+            {
+                return string.IsNullOrEmpty(this._name) ? "No Name" : this._name;
+            }
         }
 
-        public int GetId()
+        public int Id
         {
-            return this._id;
-        }
+            set
+            {
+                // the value keyword is used to receive set the value to the property
+                // i.e set Id = 101
+                if (value <= 0)
+                {
+                    throw new Exception("Student Id cannot be negative");
+                }
+                this._id = value;
+            }
+            get
+            {
+                return this._id;
+            }
 
-        public void SetId(int Id)
-        {
-            if (Id <= 0)
-            {
-                throw new Exception("Student Id cannot be negative");
-            }
-            else
-            {
-                this._id = Id;
-            }
         }
 
     }
@@ -71,19 +102,17 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            Student S1 = new Student()
-            {
+            Student S1 = new Student();
 
-            };
+            // set like a field not a method, no need to create get and set methods
+            S1.Id = 101;
+            S1.Name = "Mark";
+            //S1.PassMark = 10;
 
-            S1.SetId(101);
 
-            //Console.WriteLine("ID = {0} && Name = {1} PassMark = {2}",
-            //    S1.ID, S1.Name, S1.PassMark);
-
-            Console.WriteLine("Student Id = {0}", S1.GetId());
-            Console.WriteLine("Student Name = {0}", S1.GetName());
-            Console.WriteLine("Student Pass Mark = {0}", S1.GetPassMark());
+            Console.WriteLine("Student Id = {0}", S1.Id);
+            Console.WriteLine("Student Name = {0}", S1.Name);
+            Console.WriteLine("Student Pass Mark = {0}", S1.PassMark);
 
 
         }
