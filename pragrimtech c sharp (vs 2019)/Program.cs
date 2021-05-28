@@ -8,112 +8,45 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    public class Student
+    public struct Customer
     {
-        private int _id;
-        private string _name;
-        private int _passMark = 35;
-        //private string _city;
-        //private string _email;
 
+        public int ID { get; set; }
+        public string Name { get; set; }
 
-        //public string City
-        //{
-        //    get
-        //    {
-        //        return this._city;
-        //    }
-        //    set
-        //    {
-        //        this._city = value;
-        //    }
-        //}
-
-        //public string Email
-        //{
-        //    get
-        //    {
-        //        return this._email;
-        //    }
-        //    set
-        //    {
-        //        this._email = value;
-        //    }
-        //}
-
-        // compiler creates fields behined the scenes
-        public string City
+        public Customer(int Id, string Name)
         {
-            get;
-            set;
+            this.ID = Id;
+            this.Name = Name;
         }
 
-        public string Email { get; set; }
-
-
-
-        public int PassMark
+        public void PrintDetail()
         {
-            // only get accessory so readonly
-            get
-            {
-                return this._passMark;
-            }
-        }
-
-        public string Name // read, write property
-        {
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new Exception("Name cannot be null or empty");
-                }
-                this._name = value;
-            }
-            get
-            {
-                return string.IsNullOrEmpty(this._name) ? "No Name" : this._name;
-            }
-        }
-
-        public int Id
-        {
-            set
-            {
-                // the value keyword is used to receive set the value to the property
-                // i.e set Id = 101
-                if (value <= 0)
-                {
-                    throw new Exception("Student Id cannot be negative");
-                }
-                this._id = value;
-            }
-            get
-            {
-                return this._id;
-            }
-
+            Console.WriteLine("Id = {0} && Name = {1}", this.ID, this.Name);
         }
 
     }
+
+
 
     public class Program
     {
         public static void Main()
         {
-            Student S1 = new Student();
+            Customer C1 = new Customer(101, "Mark");
+            C1.PrintDetail();
 
-            // set like a field not a method, no need to create get and set methods
-            S1.Id = 101;
-            S1.Name = "Mark";
-            //S1.PassMark = 10;
+            Customer C2 = new Customer();
+            C2.ID = 102;
+            C2.Name = "John";
+            C2.PrintDetail();
 
-
-            Console.WriteLine("Student Id = {0}", S1.Id);
-            Console.WriteLine("Student Name = {0}", S1.Name);
-            Console.WriteLine("Student Pass Mark = {0}", S1.PassMark);
-
+            Customer C3 = new Customer()
+            {
+                ID = 103,
+                Name = "Joe"
+            };
+            C3.PrintDetail();
 
         }
     }
