@@ -8,85 +8,69 @@ using System.Linq;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    // struct is directly on the stack 
-    // structs can't inherit from another class or struct but can use interfaces, interface inheritance
-    // sealed means in cannot be inherited/derived from, structs are sealed
-    //public sealed class Customer 
-    public struct Customer
+
+    /// <summary>
+    // only declarations
+    // interfaces cannot use access modifiers are public by default
+    // cannot have fields
+    // cannot have implementation details
+    /// </summary>
+    interface ICustomer1
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        public void Print()
-        {
-            Console.WriteLine("The ID is {0} and the Name is {1}", ID, Name );
-        }
-
-        public static void PrintComparedObjectNames(string name1, string name2)
-        {
-            Console.WriteLine("object one name is {0} object two name is {1}", name1, name2);
-        }
-
-        // structs can't have destructors
-        //~Customer()
-        //{
-                
-        //}
-
-        // structs must have parameters in the constructor
-        // structs do not have the concept of object references
-        //public Customer()
-        //{
-
-        //}
-
+        //void Print();
+        void Print1();
 
     }
 
+    // inteface inheritance chain, the class i.e Customer must use all methods
+    // i.e Print1 and Print2
+    interface ICustomer2 : ICustomer1
+    {
+        void Print2();
+    }
 
-    public class Program 
+    public class Sample
+    {
+
+    }
+
+    // class must implement all methods
+    // multi inteface inheritance
+    public class Customer : ICustomer2
+    {
+
+        // signature must match
+        //public void Print()
+        public void Print1()
+        {
+            Console.WriteLine("Inteface Print1 Method");
+        }
+        public void Print2()
+        {
+            Console.WriteLine("Inteface Print2 Method");
+        }
+
+    }
+
+    // to reiterate classes cannot have multiple inheritance
+    //public class Program : Customer, Sample 
+    public class Program
     {
         public static void Main()
         {
-            // structs are value types
-            // int is just an alis for System.Int32 i = 0;
-            // a value type will be removed from memory when the block has finished executing i.e scope is lost
-            // i.e i it will be destroyed when main has completed executing
-            int i = 0;
+            // interface cannot be concrete
+            //ICustomer1 Customer = new ICustomer1();
 
+            // interfaces can be used as reference variables to point to a dervied class, ICustomer is essentially a parent of Customer
+            // therefore can be inherited/derived from
+            ICustomer1 Customer1 = new Customer();
+            Customer1.Print1();
 
-            if (i == 10)
-            {
-                // j will be removed once the if block is done
-                int j = 20;
-                
-                // reference variable on the stack, object itself is on the heap
-                // the reference variable will be destroyed  but the object still exists on the heap
-                // and will be destroyed by the garbage collector when it sees no pointer
-                //Customer C1 = new Customer();
-                //C1.ID = 101;
-                //C1.Name = "Mark";
-            }
-            Console.WriteLine("Hello");
+            // must use all methods from inheritance chain
+            ICustomer2 Customer2 = new Customer();
+            Customer2.Print1();
+            Customer2.Print2();
 
-
-            // stacki will remain 10, stackj although it is assigned to stacki will make a copy
-            // therefore stackj + 1 will be 11 and will not affect the value of stacki
-            int stacki = 10;
-            int stackj = stacki; 
-            stackj = stackj + 1;
-
-            Console.WriteLine("stacki = {0} and stackj = {1}", stacki, stackj );
-
-            Customer C1 = new Customer()
-            {
-                ID = 101,
-                Name = "Mark"
-            };
-
-            Customer C2 = C1;
-            C2.Name = "Mary";
-            Customer.PrintComparedObjectNames(C1.Name, C2.Name);
         }
     }
 
