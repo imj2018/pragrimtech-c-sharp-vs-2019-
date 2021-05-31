@@ -8,68 +8,61 @@ using System.Linq;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-
     /// <summary>
-    // only declarations
-    // interfaces cannot use access modifiers are public by default
-    // cannot have fields
-    // cannot have implementation details
+    // if two methods have the same method signature and both
+    // are impemented, it is not certain which will be invoked
     /// </summary>
-    interface ICustomer1
+    interface I1
     {
-        //void Print();
-        void Print1();
-
+        void InterfaceMethod();
     }
 
-    // inteface inheritance chain, the class i.e Customer must use all methods
-    // i.e Print1 and Print2
-    interface ICustomer2 : ICustomer1
+    interface I2
     {
-        void Print2();
+        void InterfaceMethod();
     }
-
-    public class Sample
+    public class Program : I1, I2
     {
-
-    }
-
-    // class must implement all methods
-    // multi inteface inheritance
-    public class Customer : ICustomer2
-    {
-
-        // signature must match
-        //public void Print()
-        public void Print1()
+        //public void interfaceMethod()
+        // explicit to avoid ambiguity, no access modifier interface name then a .
+        //void I1.InterfaceMethod()
+        // if a default implementation is needed set the access modifier to public
+        // with no name . declaration
+        public void InterfaceMethod()
         {
-            Console.WriteLine("Inteface Print1 Method");
-        }
-        public void Print2()
-        {
-            Console.WriteLine("Inteface Print2 Method");
+            Console.WriteLine("I1 Interface Method");
         }
 
-    }
+        void I2.InterfaceMethod()
+        {
+            Console.WriteLine("I2 Interface Method");
+        }
 
-    // to reiterate classes cannot have multiple inheritance
-    //public class Program : Customer, Sample 
-    public class Program
-    {
         public static void Main()
         {
-            // interface cannot be concrete
-            //ICustomer1 Customer = new ICustomer1();
+            Program P = new Program();
 
-            // interfaces can be used as reference variables to point to a dervied class, ICustomer is essentially a parent of Customer
-            // therefore can be inherited/derived from
-            ICustomer1 Customer1 = new Customer();
-            Customer1.Print1();
+            // type cast is needed to define, i.e type cast to type interface I1. the only way to invoke is using an
+            // interface reference variable like so
+            ((I1)P).InterfaceMethod(); 
+            ((I2)P).InterfaceMethod();
 
-            // must use all methods from inheritance chain
-            ICustomer2 Customer2 = new Customer();
-            Customer2.Print1();
-            Customer2.Print2();
+            // alternative to type casting
+            I1 i1 = new Program();
+            I2 i2 = new Program();
+
+            i1.InterfaceMethod();
+            i2.InterfaceMethod();
+
+            Program P2 = new Program();
+
+            // can be seen in intellisense as it is set to default
+            P2.InterfaceMethod();
+            ((I2)P2).InterfaceMethod();
+
+
+
+
 
         }
     }
