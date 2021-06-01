@@ -8,36 +8,53 @@ using System.Linq;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-
     /// <summary>
-    // abstract class can have implementation for some of its members
-    // or not, interface must implement all it's memebers/methods
-    // abstract class members are private by default, interface members are public by default
-    // abstract can have fields, interfaces cannot have fields
-    // interfaces can inherit from other interfaces but not from other abstract classes
-    // abstract class can inherit from another abstract class or another interface
-    // interface members/methods cannot have access modifiers 
+    // class A is super base class
+    // both class B and C are overriding the virtual method from A
+    // if class D could inherit from B and C and does not override the Print method which
+    // should it invoke from B or C? i.e the Diamond problem
     /// </summary>
-    public abstract class Customer
+    class A
     {
-        // not marked as abstract but can still be implemented
-        public void Print()
+        public virtual void Print()
         {
-            Console.WriteLine("Print");
+            Console.WriteLine("A implementation");
+        }
+
+    }
+
+    class B : A
+    {
+        public override void Print()
+        {
+            //base.Print();
+            Console.WriteLine("B Implementation");
+        }
+
+    }
+
+    class C : A
+    {
+        public override void Print()
+        {
+            Console.WriteLine("C Implementation");
         }
     }
 
-    public interface ICustomer
+    class D : B, C
     {
-        //int ID; 
-        void Print();
+
     }
 
     public class Program
     { 
         public static void Main()
         {
+            B b = new B();
+            b.Print();
 
+            D d = new D();
+            d.Print();
         }
         
 
