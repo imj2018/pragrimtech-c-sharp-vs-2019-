@@ -6,89 +6,98 @@ using ProjectA.TeamA;
 using ProjectA.TeamB;
 using System.Linq;
 
+
+//public delegate void SampleDelegate();
+//public delegate int SampleDelegate();
+public delegate void SampleDelegate(out int Number);
+
+
+
 namespace pragrimtech_c_sharp__vs_2019_
 {
-
-    public class Employee
+    /// <summary>
+    // multicast delegate points to more than one function 
+    // there are 2 approached
+    // + or +=, - or -=
+    // added to a method invocation list, they will be called in the order registered
+    // if the method has a return type or an out parameter, the last method in the invocation list will be called
+    // can use delegates for the observer (pub/sub)  design pattern 
+    /// </summary>
+    class Pragim
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public int Salary { get; set; }
-        public int Experience { get; set; }
-
-        // pass the delegate as a parameter, at runtime the delegate will invoke the method IsPromotable
-        // is pointing to
-        // essentially this function is taking a another function as a parameter (when you want
-        // to pass a function as a paramter think of delegates
-
-        public static void PromoteEmployee(List<Employee> employeeList, IsPromotable isPromotable)
+       public static void Main()
         {
-            foreach (Employee employee in employeeList)
-            {
-                // instead of hard coding the logic, it can be decoupled
-                // condition returns a bool and should match the delegate and will be replaced by
-                // a delegate
-                //if (employee.Experience >= 5)
-                // the logic to promote will now be decided by the end user
-                if (isPromotable(employee))
-                {
-                    Console.WriteLine(employee.Name + " promoted");
-                }
-            }
-        }
-    }
+         // point delegate to function then invoke delegate
+         // i.e register the method SampleMethodOne to the delegate sampleDelegate
+         //SampleDelegate sampleDelegate = new SampleDelegate(SampleMethodOne);
+         //sampleDelegate();
 
-    // delegate will return a true or false for an Employee passed in
-    public delegate bool IsPromotable(Employee employee);
+            SampleDelegate del1, del2, del3, del4;
+            del1 = new SampleDelegate(SampleMethodOne);
+            del2 = new SampleDelegate(SampleMethodTwo);
+            //del3 = new SampleDelegate(SampleMethodThree);
+
+            // delegate 4 is now pointing to all 3 methods by chaining with the + sign
+            // - remove a delegate
+            // use + to make use of different instances
+            //del4 = del1 + del2 + del3;
+            //del4 = del1 + del2 + del3 - del2;
+            //del4();
+
+            // if you want to use the same instance and register multiple functions +=
+            // allows the delegate not just the one passed in the constructor 
+            // we are registering SampleMethodTwo with del5,
+            //SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
+            //del5 += SampleMethodTwo;
+            //del5 += SampleMethodThree;
+            //del5 -= SampleMethodOne;
+
+            // though  the delegate is pointing at two functions, it will return the value from the
+            // last method in the invocation list i.e SampleMethodTwo
+            //SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
+            //del5 += SampleMethodTwo;
+            //int DelegateReturnValue = del5();
+
+            //Console.WriteLine("DelegateReturnValue = {0} " + DelegateReturnValue);
+
+            // with an output paramter, it will still return the last value in the invokation list
+            SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
+            del5 += SampleMethodTwo;
+            int DelegateReturnOutputParameter = -1;
+
+            del5(out DelegateReturnOutputParameter);
+
+            Console.WriteLine("DelegateReturnValue = {0} " + DelegateReturnOutputParameter);
 
 
-    public class Program
-    {
-        public static void Main()
-        {
-            List<Employee> employees = new List<Employee>()
-            {
-                new Employee() { ID = 101, Name = "Mary", Salary = 5000, Experience = 5},
-                new Employee() { ID = 102, Name = "Mike", Salary = 4000, Experience = 4},
-                new Employee() { ID = 103, Name = "John", Salary = 6000, Experience = 5},
-                new Employee() { ID = 104, Name = "Todd", Salary = 3000, Experience = 3}
-            };
-
-            // to reiterate a delegate is like a class, when an instance is created the constructor accepts the
-            // name of the function and the signature must match
-            // pass the function to the constructor of the delegate, no brackets Promote()
-            //IsPromotable isPromotable = new IsPromotable(Promote);
-
-            // this now takes another parameter which is the delegate
-            //Employee.PromoteEmployee(employees, isPromotable);
-
-            // delegates can add more difficulty
-            // a lambda can be used instead (lambda expressions are based on delegates) 
-            // it will operate on an employee object
-            // employee such that an employee experience >= 5
-            // behind the scenes it operates the same as a delegate
-            Employee.PromoteEmployee(employees, employee => employee.Experience >= 5);
         }
 
+        //public static void SampleMethodOne()
+        // return type
+        //public static int SampleMethodOne()
+        // out parameter
+        public static void SampleMethodOne(out int Number)
+        {
+            Number = 1;
+        }
 
-        // the logic is now outside 
-        //public static bool Promote(Employee employee)
-        //{
-        //    if (employee.Experience >= 5)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        public static void SampleMethodTwo(out int Number)
+        {
+            Number = 2;
+        }
+
+        public static void SampleMethodThree()
+        {
+            Console.WriteLine("SampleMethodThree Invoked");
+        }
 
     }
-
-
 
 }
+
+
+
+
 
 
 
