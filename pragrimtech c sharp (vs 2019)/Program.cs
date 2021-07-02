@@ -5,90 +5,72 @@ using System.Collections.Generic;
 using ProjectA.TeamA;
 using ProjectA.TeamB;
 using System.Linq;
+using System.IO;
 
-
-//public delegate void SampleDelegate();
-//public delegate int SampleDelegate();
 public delegate void SampleDelegate(out int Number);
-
 
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    /// <summary>
-    // multicast delegate points to more than one function 
-    // there are 2 approached
-    // + or +=, - or -=
-    // added to a method invocation list, they will be called in the order registered
-    // if the method has a return type or an out parameter, the last method in the invocation list will be called
-    // can use delegates for the observer (pub/sub)  design pattern 
-    /// </summary>
+
     class Pragim
     {
-       public static void Main()
+        public static void Main()
         {
-         // point delegate to function then invoke delegate
-         // i.e register the method SampleMethodOne to the delegate sampleDelegate
-         //SampleDelegate sampleDelegate = new SampleDelegate(SampleMethodOne);
-         //sampleDelegate();
+            StreamReader streamReader = null;
+            try
+            {
+                // changing the directory will throw a directory not found and require
+                // a different exception (not FileNoteFoundException)
+                streamReader = new StreamReader(@"C:\Users\miral\Desktop\data.txt");
 
-            SampleDelegate del1, del2, del3, del4;
-            del1 = new SampleDelegate(SampleMethodOne);
-            del2 = new SampleDelegate(SampleMethodTwo);
-            //del3 = new SampleDelegate(SampleMethodThree);
+                Console.WriteLine(streamReader.ReadToEnd());
 
-            // delegate 4 is now pointing to all 3 methods by chaining with the + sign
-            // - remove a delegate
-            // use + to make use of different instances
-            //del4 = del1 + del2 + del3;
-            //del4 = del1 + del2 + del3 - del2;
-            //del4();
+                //streamReader.Close();
+            }
+            //catch (Exception ex)
+            catch (FileNotFoundException ex)
+            {
+                // log to a database, send to error to admin etc
+                // the parent Exception class does not have the FileName property
+                Console.WriteLine("Please check if the file {0} exists", ex.FileName); 
+                //Console.WriteLine(ex.Message);
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine(ex.StackTrace);
+            }
+            // practical application of inheritance, Exception is the parent class to all exceptions
+            // and can point to any derived
+            // specific inheritance/exceptions at the top and the general at the bottom
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            // if you want to use the same instance and register multiple functions +=
-            // allows the delegate not just the one passed in the constructor 
-            // we are registering SampleMethodTwo with del5,
-            //SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
-            //del5 += SampleMethodTwo;
-            //del5 += SampleMethodThree;
-            //del5 -= SampleMethodOne;
+            // though finally is optional, without a finally block and there is a FileNotFoundException
+            // it will not execute the rest of the code, resources will not be released
+            //if (streamReader != null)
+            //{
+            //    streamReader.Close();
+            //}
+            //Console.WriteLine("Finally Block");
 
-            // though  the delegate is pointing at two functions, it will return the value from the
-            // last method in the invocation list i.e SampleMethodTwo
-            //SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
-            //del5 += SampleMethodTwo;
-            //int DelegateReturnValue = del5();
+            // because of the directory exception, the code to release/streamReader.Close will
+            // never execute therefore release them in the finally which will execute whether there
+            // is an exception or not
+            finally
+            {
 
-            //Console.WriteLine("DelegateReturnValue = {0} " + DelegateReturnValue);
-
-            // with an output paramter, it will still return the last value in the invokation list
-            SampleDelegate del5 = new SampleDelegate(SampleMethodOne);
-            del5 += SampleMethodTwo;
-            int DelegateReturnOutputParameter = -1;
-
-            del5(out DelegateReturnOutputParameter);
-
-            Console.WriteLine("DelegateReturnValue = {0} " + DelegateReturnOutputParameter);
+                // if check is required, if StreamReader cannot get the data from the fill it will be
+                // null and throw a null exception
+                if (streamReader != null)
+                {
+                    streamReader.Close();
+                }             
+                Console.WriteLine("Finally Block");
+            }
 
 
-        }
-
-        //public static void SampleMethodOne()
-        // return type
-        //public static int SampleMethodOne()
-        // out parameter
-        public static void SampleMethodOne(out int Number)
-        {
-            Number = 1;
-        }
-
-        public static void SampleMethodTwo(out int Number)
-        {
-            Number = 2;
-        }
-
-        public static void SampleMethodThree()
-        {
-            Console.WriteLine("SampleMethodThree Invoked");
         }
 
     }
