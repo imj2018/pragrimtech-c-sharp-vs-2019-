@@ -7,35 +7,53 @@ using ProjectA.TeamB;
 using System.Linq;
 using System.IO;
 
-class Circle
+public class Employee 
 {
-    //static float _PI = 3.141f;
-    public static float _PI;
+    public string FirstName;
+    public string LastName;
+    public string Email;
 
-    int _Radius;
-
-    public Circle(int Radius)
+    public void PrintFullName()
     {
-        Console.WriteLine("Instance Constructor Called");
-        this._Radius = Radius;
+        Console.WriteLine(FirstName + " " + LastName);
+    }
+}
+
+public class FullTimeEmployee : Employee
+{
+    public float YearlySalary;
+
+}
+
+public class PartTimeEmployee : Employee
+{
+    public float HourlyRate;
+}
+
+public class A : PartTimeEmployee
+{
+
+}
+
+public class ParentClass
+{
+    public ParentClass()
+    {
+        Console.WriteLine("Parent Constructor called");
     }
 
-    static Circle()
+    public ParentClass(string Message)
     {
-        Console.WriteLine("Static Constructor Called");
-        Circle._PI = 3.141f;
+        Console.WriteLine(Message);
     }
+}
 
-    public float CalculateArea()
+public class ChildClass : ParentClass
+{
+    public ChildClass() : base("Derived class controlling Parent Class")
     {
-        return Circle._PI * this._Radius * this._Radius; 
+        Console.WriteLine("ChildClass Constructor called");
     }
-
-    public static void Print()
-    {
-        //
-    }
-
 }
 
 
@@ -45,20 +63,26 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            //Circle C1 = new Circle(5);
-            //float Area = C1.CalculateArea();
-            //Circle.Print();
+            FullTimeEmployee FTE = new FullTimeEmployee();
+            FTE.FirstName = "John";
+            FTE.LastName = "Doe";
+            FTE.YearlySalary = 5000;
+            FTE.PrintFullName();
 
-            //Console.WriteLine("Area = {0}", Area);
+            PartTimeEmployee PTE = new PartTimeEmployee();
+            PTE.FirstName = "Part";
+            PTE.LastName = "Time";
+            PTE.HourlyRate = 30.00f;
+            PTE.PrintFullName();
 
-            //Circle C2 = new Circle(6);
-            //float Area2 = C2.CalculateArea();
+            A A1 = new A();
+            A1.FirstName = "multi level class inheritance, derived from PartTimeEmployee";
+            A1.HourlyRate = 30.00f;
+            A1.PrintFullName();
 
-            //Console.WriteLine("Area = {0}", Area2);
+            ChildClass CC = new ChildClass();
 
-            Console.WriteLine(Circle._PI);
         }
-
     }
 
 }
