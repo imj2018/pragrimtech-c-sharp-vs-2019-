@@ -7,45 +7,56 @@ using ProjectA.TeamB;
 using System.Linq;
 using System.IO;
 
-class Customer
+class Circle
 {
-    string _firstName;
-    string _lastName;
+    //static float _PI = 3.141f;
+    public static float _PI;
 
-    public Customer() : this("No FirstName Provided", "No LastName Provided")
-    {
-    }
-    public Customer(string FirstName, string LastName)
-    {
-        this._firstName = FirstName;
-        this._lastName = LastName;
-    }
+    int _Radius;
 
-    public void PrintFullName()
+    public Circle(int Radius)
     {
-        Console.WriteLine("Full Name = {0}", this._firstName + " " + this._lastName);
+        Console.WriteLine("Instance Constructor Called");
+        this._Radius = Radius;
     }
 
-    ~Customer()
+    static Circle()
     {
-        //Clean up code
+        Console.WriteLine("Static Constructor Called");
+        Circle._PI = 3.141f;
     }
+
+    public float CalculateArea()
+    {
+        return Circle._PI * this._Radius * this._Radius; 
+    }
+
+    public static void Print()
+    {
+        //
+    }
+
 }
+
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-
     class Pragim
     {
         public static void Main()
         {
-            //Customer C1 = new Customer("John", "Doe");
-            Customer C1 = new Customer();
-            C1.PrintFullName();
-            
-            Customer C2 = new Customer("John", "Doe");
-            C2.PrintFullName();
+            //Circle C1 = new Circle(5);
+            //float Area = C1.CalculateArea();
+            //Circle.Print();
 
+            //Console.WriteLine("Area = {0}", Area);
+
+            //Circle C2 = new Circle(6);
+            //float Area2 = C2.CalculateArea();
+
+            //Console.WriteLine("Area = {0}", Area2);
+
+            Console.WriteLine(Circle._PI);
         }
 
     }
