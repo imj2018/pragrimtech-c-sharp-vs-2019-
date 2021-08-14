@@ -7,8 +7,30 @@ using ProjectA.TeamB;
 using System.Linq;
 using System.IO;
 
-public delegate void SampleDelegate(out int Number);
+class Customer
+{
+    string _firstName;
+    string _lastName;
 
+    public Customer() : this("No FirstName Provided", "No LastName Provided")
+    {
+    }
+    public Customer(string FirstName, string LastName)
+    {
+        this._firstName = FirstName;
+        this._lastName = LastName;
+    }
+
+    public void PrintFullName()
+    {
+        Console.WriteLine("Full Name = {0}", this._firstName + " " + this._lastName);
+    }
+
+    ~Customer()
+    {
+        //Clean up code
+    }
+}
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
@@ -17,8 +39,12 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-
-            // relearn from 19
+            //Customer C1 = new Customer("John", "Doe");
+            Customer C1 = new Customer();
+            C1.PrintFullName();
+            
+            Customer C2 = new Customer("John", "Doe");
+            C2.PrintFullName();
 
         }
 
