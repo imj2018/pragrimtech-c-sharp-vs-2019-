@@ -7,40 +7,6 @@ using ProjectA.TeamB;
 using System.Linq;
 using System.IO;
 
-public class Employee
-{
-    public string FirstName = "FN";
-    public string LastName = "LN";
-
-    public virtual void PrintFullName()
-    {
-        Console.WriteLine(FirstName + " " + LastName);
-    }
-}
-
-public class PartTimeEmployee : Employee
-{
-    public override void PrintFullName()
-    {
-        Console.WriteLine(FirstName + " " + LastName + " - Part Time");
-    }
-}
-
-public class FullTimeEmployee : Employee
-{
-    public override void PrintFullName()
-    {
-        Console.WriteLine(FirstName + " " + LastName + " - Full Time");
-    }
-}
-
-public class TemporaryEmpoyee : Employee
-{
-    //public override void PrintFullName()
-    //{
-    //    Console.WriteLine(FirstName + " " + LastName + " - Temporary");
-    //}
-}
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
@@ -48,21 +14,58 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            // "polymorphism allows us to invoke derived class methods
-            // using a base class variable at run time"
-            List<Employee> employees = new List<Employee>();
-            employees.Add(new Employee());
-            employees.Add(new PartTimeEmployee());
-            employees.Add(new FullTimeEmployee());
-            employees.Add(new TemporaryEmpoyee());
-
-            for (int i = 0; i < employees.Count; i++)
-            {
-                employees[i].PrintFullName();
-            }
+            Add(5, 6);
 
         }
+
+        public static void Add(int FN, int SN)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN);
+        }
+
+        public static void Add(int FN, int SN, int TN)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN + TN);
+        }
+
+        //public static int Add(int FN, int SN, int TN)
+        //{
+        //    return FN + SN + TN;
+        //}
+
+        public static void Add(int FN, int SN, params int[] TN)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN);
+        }
+
+        //public static void Add(int FN, int SN, int[] TN)
+        //{
+        //    Console.WriteLine("Sum = {0}", FN + SN);
+        //}
+
+        public static void Add(int FN, int SN, out int Sum)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN);
+            Sum = FN + SN;
+        }
+
+        public static void Add(float FN, float SN)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN);
+        }
+
+        public static void Add(int FN, float SN)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN);
+        }
+
+        public static void Add(int FN, int SN, int TN, int FourthNumber)
+        {
+            Console.WriteLine("Sum = {0}", FN + SN + TN + FourthNumber);
+        }
+
     }
+
 
 }
 
