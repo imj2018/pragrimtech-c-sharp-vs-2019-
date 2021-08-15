@@ -7,34 +7,40 @@ using ProjectA.TeamB;
 using System.Linq;
 using System.IO;
 
-public class Employee 
+public class Employee
 {
-    public string FirstName;
-    public string LastName;
-    public string Email;
+    public string FirstName = "FN";
+    public string LastName = "LN";
 
-    public void PrintFullName()
+    public virtual void PrintFullName()
     {
         Console.WriteLine(FirstName + " " + LastName);
     }
 }
+
 public class PartTimeEmployee : Employee
 {
-    public new void PrintFullName()
+    public override void PrintFullName()
     {
-        //base.PrintFullName();
-        Console.WriteLine(FirstName + " " + LastName + " - Contractor");
+        Console.WriteLine(FirstName + " " + LastName + " - Part Time");
     }
 }
 
 public class FullTimeEmployee : Employee
 {
-
+    public override void PrintFullName()
+    {
+        Console.WriteLine(FirstName + " " + LastName + " - Full Time");
+    }
 }
 
-
-
-
+public class TemporaryEmpoyee : Employee
+{
+    //public override void PrintFullName()
+    //{
+    //    Console.WriteLine(FirstName + " " + LastName + " - Temporary");
+    //}
+}
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
@@ -42,17 +48,18 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            FullTimeEmployee FTE = new FullTimeEmployee();
-            FTE.FirstName = "FullTime";
-            FTE.LastName = "Employee";
-            FTE.PrintFullName();
+            // "polymorphism allows us to invoke derived class methods
+            // using a base class variable at run time"
+            List<Employee> employees = new List<Employee>();
+            employees.Add(new Employee());
+            employees.Add(new PartTimeEmployee());
+            employees.Add(new FullTimeEmployee());
+            employees.Add(new TemporaryEmpoyee());
 
-            PartTimeEmployee PTE = new PartTimeEmployee();
-            //Employee PTE = new PartTimeEmployee();
-            PTE.FirstName = "PartTime";
-            PTE.LastName = "Employee";
-            PTE.PrintFullName();
-            ((Employee)PTE).PrintFullName();
+            for (int i = 0; i < employees.Count; i++)
+            {
+                employees[i].PrintFullName();
+            }
 
         }
     }
