@@ -18,43 +18,22 @@ public class Employee
         Console.WriteLine(FirstName + " " + LastName);
     }
 }
+public class PartTimeEmployee : Employee
+{
+    public new void PrintFullName()
+    {
+        //base.PrintFullName();
+        Console.WriteLine(FirstName + " " + LastName + " - Contractor");
+    }
+}
 
 public class FullTimeEmployee : Employee
 {
-    public float YearlySalary;
 
 }
 
-public class PartTimeEmployee : Employee
-{
-    public float HourlyRate;
-}
 
-public class A : PartTimeEmployee
-{
 
-}
-
-public class ParentClass
-{
-    public ParentClass()
-    {
-        Console.WriteLine("Parent Constructor called");
-    }
-
-    public ParentClass(string Message)
-    {
-        Console.WriteLine(Message);
-    }
-}
-
-public class ChildClass : ParentClass
-{
-    public ChildClass() : base("Derived class controlling Parent Class")
-    {
-        Console.WriteLine("ChildClass Constructor called");
-    }
-}
 
 
 namespace pragrimtech_c_sharp__vs_2019_
@@ -64,23 +43,16 @@ namespace pragrimtech_c_sharp__vs_2019_
         public static void Main()
         {
             FullTimeEmployee FTE = new FullTimeEmployee();
-            FTE.FirstName = "John";
-            FTE.LastName = "Doe";
-            FTE.YearlySalary = 5000;
+            FTE.FirstName = "FullTime";
+            FTE.LastName = "Employee";
             FTE.PrintFullName();
 
             PartTimeEmployee PTE = new PartTimeEmployee();
-            PTE.FirstName = "Part";
-            PTE.LastName = "Time";
-            PTE.HourlyRate = 30.00f;
+            //Employee PTE = new PartTimeEmployee();
+            PTE.FirstName = "PartTime";
+            PTE.LastName = "Employee";
             PTE.PrintFullName();
-
-            A A1 = new A();
-            A1.FirstName = "multi level class inheritance, derived from PartTimeEmployee";
-            A1.HourlyRate = 30.00f;
-            A1.PrintFullName();
-
-            ChildClass CC = new ChildClass();
+            ((Employee)PTE).PrintFullName();
 
         }
     }
