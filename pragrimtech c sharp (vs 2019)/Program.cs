@@ -4,74 +4,74 @@ using System.Collections.Generic;
 //using PATB = ProjectA.TeamB;
 using ProjectA.TeamA;
 using ProjectA.TeamB;
-using System.Linq;
-using System.IO;
 
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    class Pragim
+
+    public class Employee
     {
-        public static void Main()
-        {
-            Add(5, 6);
+        public string FirstName = "FN";
+        public string LastName = "LN";
 
+     
+        public virtual void PrintFullName()
+        {
+            Console.WriteLine(FirstName + " " + LastName);
         }
+    }
 
-        public static void Add(int FN, int SN)
+    public class PartTimeEmployee : Employee
+    {
+        public override void PrintFullName()
         {
-            Console.WriteLine("Sum = {0}", FN + SN);
+            Console.WriteLine(FirstName + " " + LastName + " - Part Time");
         }
+    }
 
-        public static void Add(int FN, int SN, int TN)
+    public class FullTimeEmployee : Employee
+    {
+        public override void PrintFullName()
         {
-            Console.WriteLine("Sum = {0}", FN + SN + TN);
+            Console.WriteLine(FirstName + " " + LastName + " - Full Time");
         }
+    }
 
-        //public static int Add(int FN, int SN, int TN)
-        //{
-        //    return FN + SN + TN;
-        //}
-
-        public static void Add(int FN, int SN, params int[] TN)
+    public class TemporaryEmployee : Employee
+    {
+        public override void PrintFullName()
         {
-            Console.WriteLine("Sum = {0}", FN + SN);
-        }
-
-        //public static void Add(int FN, int SN, int[] TN)
-        //{
-        //    Console.WriteLine("Sum = {0}", FN + SN);
-        //}
-
-        public static void Add(int FN, int SN, out int Sum)
-        {
-            Console.WriteLine("Sum = {0}", FN + SN);
-            Sum = FN + SN;
-        }
-
-        public static void Add(float FN, float SN)
-        {
-            Console.WriteLine("Sum = {0}", FN + SN);
-        }
-
-        public static void Add(int FN, float SN)
-        {
-            Console.WriteLine("Sum = {0}", FN + SN);
-        }
-
-        public static void Add(int FN, int SN, int TN, int FourthNumber)
-        {
-            Console.WriteLine("Sum = {0}", FN + SN + TN + FourthNumber);
+            Console.WriteLine(FirstName + " " + LastName + " - Temporary Time");
         }
 
     }
 
+    public class Program
+    {
+        public static void Main()
+        {
+            Employee[] employees = new Employee[4]
+            {
+                //employees[0] = new Employee(),
+                //employees[1] = new PartTimeEmployee(),
+                //employees[2] = new FullTimeEmployee(),
+                //employees[3] = new TemporaryEmployee()
 
+                new Employee(),
+                new PartTimeEmployee(),
+                new FullTimeEmployee(),
+                new TemporaryEmployee()
+            };
+
+            foreach (Employee employee in employees)
+            {
+                employee.PrintFullName();
+            }
+
+
+        }
+    }
 }
-
-
-
-
 
 
 
