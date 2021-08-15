@@ -13,19 +13,52 @@ namespace pragrimtech_c_sharp__vs_2019_
         private int _id;
         private string _name;
         private int _passMark = 35;
-
-        public int GetPassMark()
-        {
-            return this._passMark;
+        public string City { get; set; }
+        public string Email {
+            get;
+            set; 
         }
 
-        public void SetId(int id)
+
+        public int PassMark
         {
-            if (id <= 0)
+            get
             {
-                throw new Exception("Student Id cannot be negative");
+                return this._passMark;
             }
-            this._id = id;
+        }
+
+        public int Id
+        {
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new Exception("Student Id cannot be negative");
+                }
+                this._id = value;
+            }
+            get
+            {
+                return this._id;
+            }
+
+        }
+
+        public string Name
+        {
+            get
+            {
+                return string.IsNullOrEmpty(this._name) ? "No name found" : this._name;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new Exception("Name cannot be null or empty");
+                }
+                this._name = value;
+            }
 
         }
 
@@ -35,14 +68,12 @@ namespace pragrimtech_c_sharp__vs_2019_
 
         }
 
-        public void SetName(string name)
+        public int GetPassMark()
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new Exception("Name cannot be null or empty");
-            }
-            this._name = name;
+            return this._passMark;
         }
+
+
 
         public string GetName()
         {
@@ -57,7 +88,16 @@ namespace pragrimtech_c_sharp__vs_2019_
             return string.IsNullOrEmpty(this._name) ? "No name found" : this._name;
         }
 
-         
+        public void SetName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new Exception("Name cannot be null or empty");
+            }
+            this._name = name;
+        }
+
+
     }
   
     public class Program
@@ -65,24 +105,24 @@ namespace pragrimtech_c_sharp__vs_2019_
         public static void Main()
         {
             Student C1 = new Student();
-            //C1.ID = -101;
-            //C1.Name = null;
-            //C1.PassMark = 0;
-            C1.SetId(102);
-            //C1.SetName("John");
-            
+            C1.Id = 117;
+            C1.Name = "John";
 
-            //C1.SetId(-1);
+            Console.WriteLine(C1.Id);
+            Console.WriteLine(C1.Name);
+            Console.WriteLine(C1.PassMark);
 
-            //Console.WriteLine("ID = {0}",
-            //    C1.GetId());
+            // messing around
+            Student[] students = new Student[2]
+            {
+                new Student() { Name = "Agent", Id = 47 },
+                new Student() { Name = "John", Id = 117 }
+            };
 
-            //C1.SetName(null);
-
-            Console.WriteLine(C1.GetId());
-            Console.WriteLine(C1.GetName());
-            Console.WriteLine(C1.GetPassMark());
-
+            foreach (var item in students)
+            {
+                Console.WriteLine("{0} {1}", item.Name, item.Id);
+            }
         }
     }
 }
