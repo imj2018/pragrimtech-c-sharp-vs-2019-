@@ -8,41 +8,57 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    class A
+    interface IA
     {
-        public virtual void Print()
-        {
-            Console.WriteLine("A Implementation");
-        }
+        void AMethod();
     }
-   
-    class B : A
+
+    class A : IA
     {
-        public override void Print()
+        public void AMethod()
         {
-            Console.WriteLine("B Implementation");
+            Console.WriteLine("A");
         }
     }
 
-    class C : A
+    interface IB
     {
-        public override void Print()
+        void BMethod();
+    }
+    class B: IB
+    {
+        public void BMethod()
         {
-            Console.WriteLine("C Implementation");
+            Console.WriteLine("B");
         }
     }
 
-    // diamond problem
-    class D : B, C
+    //class AB : A, B
+    class AB : IA, IB
     {
+        // instead of re-implementing use the implementation 
+        // from class A and B
+        A a = new A();
+        B b = new B();
+
+        public void AMethod()
+        {
+            a.AMethod();
+        }
+
+        public void BMethod()
+        {
+            b.BMethod();
+        }
     }
 
     public class Program
     {
         public static void Main()
         {
-            D d = new D();
-            d.Print();
+            AB ab = new AB();
+            ab.AMethod();
+            ab.BMethod();
         }
     }
 }
