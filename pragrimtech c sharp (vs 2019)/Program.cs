@@ -8,86 +8,84 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    // structs are sealed, cannot inherit from struct
-    public struct Customer
+    interface ICustomer1
     {
-        private int _id;
-        private string _name;
-
-        public int ID
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        //public Customer() { }
-
-        public Customer(int id, string name)
-        {
-            this._id = id;
-            this._name = name;
-        }
-
-        public void PrintDetails()
-        {
-            Console.WriteLine("Id = {0} && Name = {1}", 
-                this._id, this._name);
-        }
-
-        //~Customer()
-        //{
-
-        //}
-
-
+        void Print1();
     }
-   
-    public class Program
+
+    interface ICustomer2 : ICustomer1
+    {
+        void Print2();
+    }
+
+    public class Customer : ICustomer2
+    {
+        // must use all implementations in chain inheritance chain
+        public void Print1()
+        {
+            Console.WriteLine("Print1");
+        }
+
+        public void Print2()
+        {
+            Console.WriteLine("Print2");
+        }
+    }
+
+
+    interface Interface1
+    {
+        // C# no fields
+        //int ID;
+
+        void Print();
+        void Print(string message);
+    }
+
+    interface Interface2
+    {
+        void Interface2Method();
+    }
+
+    // multiple interfaces
+    public class Sample : Interface1, Interface2
+    {
+
+        public void Print()
+        {
+            Console.WriteLine("Interface Print Method");
+        }
+
+        public void Print(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public void Interface2Method()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    //public class Sample
+    //{
+    //    //
+    //}
+
+    //public class Program : Test, Sample
+    public class Program : Sample
     {
         public static void Main()
         {
-            //int i = 10;
+            Sample sample = new Sample();
+            sample.Print();
+            sample.Print("homicidal");
 
-            //if (i == 10)
-            //{
-            //    int j = 20;
-            //    Customer C1 = new Customer()
-            //    {
-            //        ID = 47,
-            //        Name = "agent"
-            //    };
-            //    Console.WriteLine("in the scope of if block {0}", C1.ID);
-            //}
-            //Console.WriteLine("in the scope of Main");
-
-            int i = 10;
-
-            // j will copy the value, it will not affect i as they are two
-            // different copies
-            int j = i;
-            j = j + 1;
-
-            Console.WriteLine("i = {0} && j = {1}", i, j);
-
-            Customer C1 = new Customer()
-            {
-                ID = 47,
-                Name = "agent"
-            };
-
-            // referencing same object
-            Customer C2 = C1;
-            C2.Name = "john";
-
-            Console.WriteLine("C1.Name = {0} && C2.Name = {1}", 
-                C1.Name, C2.Name);
-
+            //ICustomer1 cust = new Customer();
+            // it can be used a reference variable as ICustomer1 is a parent
+            // and can point to a Customer object
+            ICustomer1 cust = new Customer();
+            cust.Print1();
         }
     }
 }
