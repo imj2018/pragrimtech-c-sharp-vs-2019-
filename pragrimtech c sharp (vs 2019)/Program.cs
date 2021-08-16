@@ -8,49 +8,31 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    interface I1
+    // cannot be instatiated, can only be a base class
+    // for other classes
+    public abstract class Customer
     {
-        void InterfaceMethod(); 
-    }
-
-    interface I2
-    {
-        void InterfaceMethod();
-    }
-
-
-    public class Program : I1, I2
-    {
-        //void I1.InterfaceMethod()
-        // default
-        public void InterfaceMethod()
+        //public abstract void Print();
+        public void Print()
         {
-            Console.WriteLine("I1 interface Method");
+            Console.WriteLine("Print");
         }
 
-        void I2.InterfaceMethod()
-        {
-            Console.WriteLine("I2 interface Method");
-        }
+    }
 
+    public class Program : Customer
+    //public abstract class Program : Customer
+    {
+        //public override void Print()
+        //{
+        //    Console.WriteLine("Print Method");
+        //}
         public static void Main()
         {
             //Program P = new Program();
-            // cannot acces through class reference variable
-            // must use interface reference variable
-            //((I1)P).InterfaceMethod();
-            //((I2)P).InterfaceMethod();
-
-            //I1 I1 = new Program();
-            //I2 I2 = new Program();
-            //I1.InterfaceMethod();
-            //I2.InterfaceMethod();
-
-            Program P = new Program();
-            P.InterfaceMethod();
-            ((I2)P).InterfaceMethod();
-            
-
+            // as an abstract parent class can point to derived class object
+            Customer C = new Program();
+            C.Print();
 
         }
 
