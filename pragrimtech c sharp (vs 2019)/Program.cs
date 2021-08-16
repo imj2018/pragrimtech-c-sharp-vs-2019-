@@ -9,66 +9,80 @@ using ProjectA.TeamB;
 namespace pragrimtech_c_sharp__vs_2019_
 {
 
-
-
-    public class Employee
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Salary { get; set; }
-        public int Experience { get; set; }
-
-        // think of delegates when wanting to pass a function as a parameter
-        public static void PromoteEmployee(List<Employee> employeeList,
-            IsPromotableDelegate isPromotable)
-        {
-            foreach(Employee employee in employeeList)
-            {
-                if(isPromotable(employee))
-                {
-                    Console.WriteLine(employee.Name + " promoted");
-                }
-            }
-        }
-
-    }
-
-    public delegate bool IsPromotableDelegate(Employee employee);
-
     public class Program
     {
         public static void Main()
         {
-            List<Employee> employeeList = new List<Employee>()
-            {
-                new Employee() { Id = 101, Name = "Mary", Salary = 5000, Experience = 5},
-                new Employee() { Id = 102, Name = "Mike", Salary = 4000, Experience = 4},
-                new Employee() { Id = 103, Name = "John", Salary = 6000, Experience = 6},
-                new Employee() { Id = 104, Name = "Todd", Salary = 3000, Experience = 3}
-            };
+            //SampleDelegate del = new SampleDelegate(SampleMethodOne);
+            //del();
 
-            //IsPromotableDelegate isPromotable = new IsPromotableDelegate(Promote);
+            //SampleDelegate del1, del2, del3, del4;
 
-            //Employee.PromoteEmployee(employeeList, isPromotable);
-            // lambda instead, employee such that employee.Experience >= 5 
-            Employee.PromoteEmployee(employeeList, employee => employee.Experience >= 5);
+            //del1 = new SampleDelegate(SampleMethodOne);
+            //del2 = new SampleDelegate(SampleMethodTwo);
+            //del3 = new SampleDelegate(SampleMethodThree);
+
+            //// del4 is pointing to multiple functions i.e a multicast delegate 
+            //del4 = del1 + del2 + del3 - del2;
+            //del4();
+
+            // register these methods to this delegate, delegate invocation list
+            //SampleDelegate del = new SampleDelegate(SampleMethodOne);
+            //del += SampleMethodTwo;
+            //del += SampleMethodThree;
+            //del -= SampleMethodOne;
+
+            //del();
+
+            SampleDelegate del = new SampleDelegate(SampleMethodOne);
+            del += SampleMethodTwo;
+
+            // the last method in the invocation list will be returned
+            //int delegateReturnValue = del();
+            int delegateReturnOutputParameterValue = 0;
+            del(out delegateReturnOutputParameterValue);
+
+            Console.WriteLine(delegateReturnOutputParameterValue);
 
 
         }
 
-        // logic is in the delegate and can be passed as a parameter to 
-        // a function
-        //public static bool Promote(Employee employee)
+        //public static void SampleMethodOne()
         //{
-        //    if(employee.Experience >= 5)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
+        //    Console.WriteLine("SampleMethodOne Invoked");
         //}
+        //public static void SampleMethodTwo()
+        //{
+        //    Console.WriteLine("SampleMethodTwo Invoked");
+        //}
+        //public static void SampleMethodThree()
+        //{
+        //    Console.WriteLine("SampleMethodThree Invoked");
+
+        //public delegate void SampleDelegate();
+        //public delegate int SampleDelegate();
+        public delegate void SampleDelegate(out int Number);
+
+        //public static int SampleMethodOne()
+        //{
+        //    return 1;
+        //}
+
+        public static void SampleMethodOne(out int Number)
+        {
+            Number = 1;
+        }
+
+        //public static int SampleMethodTwo()
+        //{
+        //    return 2;
+        //}
+
+        public static void SampleMethodTwo(out int Number)
+        {
+            Number = 2;
+        }
+
 
     }
 }
