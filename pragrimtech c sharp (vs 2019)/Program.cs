@@ -8,121 +8,69 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    public class Student
+    public struct Customer
     {
         private int _id;
         private string _name;
-        private int _passMark = 35;
-        public string City { get; set; }
-        public string Email {
-            get;
-            set; 
-        }
 
-
-        public int PassMark
+        public int ID
         {
-            get
-            {
-                return this._passMark;
-            }
-        }
-
-        public int Id
-        {
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new Exception("Student Id cannot be negative");
-                }
-                this._id = value;
-            }
-            get
-            {
-                return this._id;
-            }
-
+            get { return _id; }
+            set { _id = value; }
         }
 
         public string Name
         {
-            get
-            {
-                return string.IsNullOrEmpty(this._name) ? "No name found" : this._name;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new Exception("Name cannot be null or empty");
-                }
-                this._name = value;
-            }
-
+            get { return _name; }
+            set { _name = value; }
         }
 
-        public int GetId()
+        public Customer(int id, string name)
         {
-            return this._id;
-
-        }
-
-        public int GetPassMark()
-        {
-            return this._passMark;
-        }
-
-
-
-        public string GetName()
-        {
-            //if (string.IsNullOrEmpty(this._name))
-            //{
-            //    return "No name found";
-            //}
-            //else
-            //{
-            //    return this._name;
-            //}
-            return string.IsNullOrEmpty(this._name) ? "No name found" : this._name;
-        }
-
-        public void SetName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new Exception("Name cannot be null or empty");
-            }
+            this._id = id;
             this._name = name;
         }
 
+        public void PrintDetails()
+        {
+            Console.WriteLine("Id = {0} && Name = {1}", this._id, this._name);
+        }
+
+
 
     }
-  
+   
     public class Program
     {
         public static void Main()
         {
-            Student C1 = new Student();
-            C1.Id = 117;
-            C1.Name = "John";
+            Customer C1 = new Customer(47, "agent");
+            C1.PrintDetails();
 
-            Console.WriteLine(C1.Id);
-            Console.WriteLine(C1.Name);
-            Console.WriteLine(C1.PassMark);
+            Customer C2 = new Customer();
+            C2.ID = 117;
+            C2.Name = "john";
+            C2.PrintDetails();
+
+            Customer C3 = new Customer()
+            {
+                ID = 103,
+                Name = "boba fett"
+            };
+            C3.PrintDetails();
+
 
             // messing around
-            Student[] students = new Student[2]
-            {
-                new Student() { Name = "Agent", Id = 47 },
-                new Student() { Name = "John", Id = 117 }
-            };
+            //Student[] students = new Student[2]
+            //{
+            //    new Student() { Name = "agent", Id = 47 },
+            //    new Student() { Name = "john", Id = 117 }
+            //};
 
-            foreach (var item in students)
-            {
-                Console.WriteLine("{0} {1}", item.Name, item.Id);
-            }
+            //foreach (var item in students)
+            //{
+            //    Console.WriteLine("{0} {1}", item.Name, item.Id);
+            //}
         }
     }
 }
