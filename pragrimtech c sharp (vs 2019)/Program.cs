@@ -8,29 +8,41 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    // abstract class can inherit from another abstract class or interface
-    public abstract class Customer : ICustomer
+    class A
     {
-        public void Print()
+        public virtual void Print()
         {
-            Console.WriteLine("Print");
-        } 
+            Console.WriteLine("A Implementation");
+        }
+    }
+   
+    class B : A
+    {
+        public override void Print()
+        {
+            Console.WriteLine("B Implementation");
+        }
     }
 
-    // interface can only inherit form another interface
-    public interface ICustomer
+    class C : A
     {
-        // can't have implementation or fields
-        //int ID;
+        public override void Print()
+        {
+            Console.WriteLine("C Implementation");
+        }
+    }
 
-        void Print();
+    // diamond problem
+    class D : B, C
+    {
     }
 
     public class Program
     {
         public static void Main()
         {
-
+            D d = new D();
+            d.Print();
         }
     }
 }
