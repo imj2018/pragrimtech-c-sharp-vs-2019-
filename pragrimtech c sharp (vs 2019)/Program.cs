@@ -8,85 +8,53 @@ using ProjectA.TeamB;
 
 namespace pragrimtech_c_sharp__vs_2019_
 {
-    interface ICustomer1
+    interface I1
     {
-        void Print1();
+        void InterfaceMethod(); 
     }
 
-    interface ICustomer2 : ICustomer1
+    interface I2
     {
-        void Print2();
+        void InterfaceMethod();
     }
 
-    public class Customer : ICustomer2
+
+    public class Program : I1, I2
     {
-        // must use all implementations in chain inheritance chain
-        public void Print1()
+        //void I1.InterfaceMethod()
+        // default
+        public void InterfaceMethod()
         {
-            Console.WriteLine("Print1");
+            Console.WriteLine("I1 interface Method");
         }
 
-        public void Print2()
+        void I2.InterfaceMethod()
         {
-            Console.WriteLine("Print2");
-        }
-    }
-
-
-    interface Interface1
-    {
-        // C# no fields
-        //int ID;
-
-        void Print();
-        void Print(string message);
-    }
-
-    interface Interface2
-    {
-        void Interface2Method();
-    }
-
-    // multiple interfaces
-    public class Sample : Interface1, Interface2
-    {
-
-        public void Print()
-        {
-            Console.WriteLine("Interface Print Method");
+            Console.WriteLine("I2 interface Method");
         }
 
-        public void Print(string message)
-        {
-            Console.WriteLine(message);
-        }
-
-        public void Interface2Method()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    //public class Sample
-    //{
-    //    //
-    //}
-
-    //public class Program : Test, Sample
-    public class Program : Sample
-    {
         public static void Main()
         {
-            Sample sample = new Sample();
-            sample.Print();
-            sample.Print("homicidal");
+            //Program P = new Program();
+            // cannot acces through class reference variable
+            // must use interface reference variable
+            //((I1)P).InterfaceMethod();
+            //((I2)P).InterfaceMethod();
 
-            //ICustomer1 cust = new Customer();
-            // it can be used a reference variable as ICustomer1 is a parent
-            // and can point to a Customer object
-            ICustomer1 cust = new Customer();
-            cust.Print1();
+            //I1 I1 = new Program();
+            //I2 I2 = new Program();
+            //I1.InterfaceMethod();
+            //I2.InterfaceMethod();
+
+            Program P = new Program();
+            P.InterfaceMethod();
+            ((I2)P).InterfaceMethod();
+            
+
+
         }
+
+
     }
 }
 
