@@ -14,44 +14,58 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-
-            StreamReader streamReader = null;
             try
             {
-                streamReader = 
-                    new StreamReader(@"C:\Users\miral\source\repos\pragrimtech-c-sharp-vs-2019-\pragrimtech c sharp (vs 2019)\data1.txt");
-                Console.WriteLine(streamReader.ReadToEnd());
-                
-            }
-            catch (FileNotFoundException ex)
-            {
-                //Console.WriteLine(ex.Message);
-                //Console.WriteLine();
-                //Console.WriteLine();
-                //Console.WriteLine(ex.StackTrace);
-
-                // Log the details to the DB
-                Console.WriteLine("Please check if the file {0} exists", ex.FileName);
-
-            }
-            // an example of inheritance, practical application of inheritance, specific exceptions at the top
-            // general at the bottom
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                if (streamReader != null)
+                try
                 {
-                    streamReader.Close();
+                    Console.WriteLine("Enter First Number");
+                    int FN = Convert.ToInt32(Console.ReadLine());
+
+                    Console.WriteLine("Enter Second Number");
+                    int SN = Convert.ToInt32(Console.ReadLine());
+
+                    int Result = FN / SN;
+
+                    Console.WriteLine("Result = {0} ", Result);
                 }
-                Console.WriteLine("Finally Block");
+                catch (Exception ex)
+                { 
+                    // write exception to file
+                    string filePath = @"C:\Users\miral\source\repos\pragrimtech-c-sharp-vs-2019-\pragrimtech c sharp (vs 2019)\log1.txt";
+
+                    // if the log file to store error information is found
+                    // inner exception
+                    if (File.Exists(filePath))
+                    {
+                        StreamWriter sw = new StreamWriter(filePath);
+                        sw.Write(ex.GetType().Name);
+                        sw.WriteLine();
+                        sw.Write(ex.Message);
+                        sw.Close();
+                        Console.WriteLine("There is a Problem, Please try later");
+                    }
+                    else
+                    {
+                        // outer exception
+                        throw new FileNotFoundException(filePath + " is not present", ex);
+                    }
+
+                }
+
+
             }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Current Exception = {0}", exception.GetType().Name);
+                if (exception.InnerException != null)
+                {
+                    Console.WriteLine("Inner Exception = {0}", exception.InnerException.GetType().Name);
+
+                }
+
+            }
+
         }
-
-
-
 
     }
 }
