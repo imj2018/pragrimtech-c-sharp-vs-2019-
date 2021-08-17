@@ -2,22 +2,19 @@
 
 namespace AssemblyOne
 {
-    public class AssemblyOneClassI
-    {
-        // internal members will be available to within the project/assembly
-        //internal int ID = 101;
+    // types can only have internal or public access modifiers
+    //private class AssemblyOneClass
 
-        // any class deriving from this class can access it even in another
-        // project or assembly
-        protected internal int ID = 101;
-    }
-
-    public class AssemblyOneClassII
+    // cannot be accessed if internal outside the assembly/project
+    // types are internal by default without an access modifier
+    // type members are private by default without an access modifier
+    class AssemblyOneClass
     {
-        public void SampleMethod()
+        int Id;
+
+        public void Print()
         {
-            AssemblyOneClassI A1 = new AssemblyOneClassI();
-            Console.WriteLine(A1.ID);
+            Console.WriteLine("Hello");
         }
     }
 }
