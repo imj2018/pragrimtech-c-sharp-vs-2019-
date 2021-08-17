@@ -12,59 +12,64 @@ namespace pragrimtech_c_sharp__vs_2019_
 
     public class Program
     {
+        /// <summary>
+        /// enums are value types 
+        /// an enum is a strongly typed constant
+        /// enum by default has underlying data type of integer starting at 0
+        /// </summary>
         public static void Main()
         {
-            Customer[] customers = new Customer[3]
-            {
-                new Customer() { Name = "Mark", Gender = Gender.Male},
-                new Customer() { Name = "Mary", Gender = Gender.Female },
-                new Customer() { Name = "Sam", Gender = Gender.Unkown }
-            };
+             //type cast to int array
+            //int[] values = (int[])Enum.GetValues(typeof(Gender));
+             //Enum class contains static methods to operate on enumerations
+            short[] values = (short[])Enum.GetValues(typeof(Gender));
 
-            for (int i = 0; i < customers.Length; i++)
+            foreach (var item in values)
             {
-                Console.WriteLine("Name = {0} && Gender = {1}", 
-                    customers[i].Name,
-                    Customer.GetGender(customers[i].Gender));
+                Console.WriteLine(item);
             }
+
+            string[] names = ((string[])Enum.GetNames(typeof(Gender)));
+
+            foreach (var item in names)
+            {
+                Console.WriteLine(item);
+            }
+
+            // though the underlying type is int a type cast or converstion is required
+            //Gender gender = (Gender)3;
+            int number = (int)Gender.Unkown;
+
+            Gender gender = (Gender)Season.Winter;
+            Console.WriteLine(gender);
 
         }
 
     }
 
-    public enum Gender
+    //public enum Gender
+
+    // : to set underlying type
+    //public enum Gender
+    public enum Gender : short
     {
-        Unkown,
-        Male,
-        Female
+        //Unkown,
+        // will start at 1 instead of 0 or set to any value
+        //Unkown = 1,
+        //Male = 3,
+        //Female = 23
+        Unkown = 1,
+        Male = 2,
+        Female = 3
     }
 
-    public class Customer
+    public enum Season
     {
-        public string Name { get; set; }
-        public Gender Gender { get; set; }
-
-        public static string GetGender(Gender gender)
-        {
-            // 0 - Unkown
-            // 1 - Male
-            // 2 - Female
-            // less readable should the application grow, which number correspond to which number?)
-            switch (gender)
-            {
-                //case 0:
-                //    return "Uknown";
-                case Gender.Unkown:
-                    return "Unknown";
-                case Gender.Male:
-                    return "Male";
-                case Gender.Female:
-                    return "Female";
-                default:
-                    return "Invalid data detected";
-            }
-        }
+        Winter = 1,
+        Spring = 2,
+        Summer = 3
     }
+
 }
 
 
