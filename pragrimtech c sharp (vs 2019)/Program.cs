@@ -15,51 +15,56 @@ namespace pragrimtech_c_sharp__vs_2019_
 {
     public class Program
     {
-
         public static void Main()
         {
-            // early binding 
-            // errors are detected at compile time
-            //Customer C1 = new Customer();
-            //string fullName = C1.GetFullName("Pragim", "Tech");
-            //Console.WriteLine("Full Name = {0}", fullName);
+            //bool Equal = Calculator.AreEqual(1, 2);
+            //bool Equal = Calculator.AreEqual("A", "A");
 
-            // late binding, when knowledge of the class/object is unavailable
-            // only use late binding with objects that are not available at compile time
-            Assembly executingAssembly = Assembly.GetExecutingAssembly();
-            
-            // returning/get the type
-            Type customerType = executingAssembly.GetType("pragrimtech_c_sharp__vs_2019_.Customer");
+            // at runtime boxing and unboxing is occuring as 10 is integer which is a value/struct 
+            // therefore it is cast to a reference type which degrades performance
+            //bool Equal = Calculator.AreEqual(10, 10);
 
-            // Activator will create an instance of the Customer class
-            // object as we don't know what it is
-            // if it were static likely just the type is required
-            object customerInstance = Activator.CreateInstance(customerType);
+            // can also pass parameters that make no sense
+            //bool Equal = Calculator.AreEqual(10, "AB");
 
-            // return an object of type MethodInfo
-            MethodInfo getFullNameMethod = customerType.GetMethod("GetFullName");
+            // "I want this method to operate on the string type"
+            //bool Equal = Calculator.AreEqual<string>("AB", "AB");
 
-            string[] parameters = new string[2];
-            parameters[0] = "Pragim";
-            parameters[1] = "Technologies";
+            // no converstion will occur i.e boxing and unboxing
+            //bool Equal = Calculator.AreEqual<int>(10, 10);
+            bool Equal = Calculator<int>.AreEqual(10, 10);
 
-            // Invoke needs the class instance/object and parameters
-            // second parameter is expecting an object[] not a string but string
-            // directly/indirectly inherits from object so it can be used
-            //string fullName = (getFullNameMethod.Invoke(customerInstance, parameters).ToString();
-            string fullName = (string)getFullNameMethod.Invoke(customerInstance, parameters);
 
-            Console.WriteLine("Full Name = {0}", fullName);
+            if (Equal)
+            {
+                Console.WriteLine("Are Equal");
+            }
+            else
+            {
+                Console.WriteLine("Not Equal");
+            }
 
         }
 
     }
 
-    public class Customer
+    //public class Calculator
+
+    // alternatively make class generic
+    public class Calculator<T>
     {
-        public string GetFullName(string FirstName, string LastName)
+        //public static bool AreEqual(int Value1, int Value2)
+
+        // int, string etc directly or indirectly inherit from object in .NET
+        // not longer strongly typed
+        //public static bool AreEqual(object Value1, object Value2)
+
+        // generics, type independant
+        //public static bool AreEqual<T>(T Value1, T Value2)
+        public static bool AreEqual(T Value1, T Value2)
         {
-            return FirstName + " " + LastName;
+            //return Value1 == Value2;
+            return Value1.Equals(Value2);
         }
 
     }
