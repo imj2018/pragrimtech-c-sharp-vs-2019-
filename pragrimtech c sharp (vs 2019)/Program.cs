@@ -17,50 +17,18 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            //int i = 10;
-            //int j = 10;
+            Customer C1 = null;
 
-            // System.Object all types in .NET directly or indirectly inherit
-            //Console.WriteLine(i == j);
-            //Console.WriteLine(i.Equals(j));
+            // depends on architecture
 
+            // ToString will throw a exception if null
+            string str = C1.ToString();
 
-            Direction direction1 = Direction.East;
-            Direction direction2 = Direction.West;
+            // Convert will convert null values to an empty strings " "
+            //string str = Convert.ToString(C1);
 
-            //Console.WriteLine(direction1 == direction2);
-            //Console.WriteLine(direction1.Equals(direction2));
-
-
-            Customer C1 = new Customer();
-            C1.FirstName = "Simon";
-            C1.LastName = "Tan";
-
-            //Customer C2 = C1;
-            //C2.LastName = "poo";
-
-
-            Customer C2 = new Customer();
-            C2.FirstName = "Simon";
-            C2.LastName = "Tan";
-
-            // value equality is the same but reference equality (reference variable) is
-            // different, it will return false as they are referencing different objects
-            Console.WriteLine("reference equality = {0}", C1 == C2);
-            Console.WriteLine("value equality (overriden Equals method) = {0}", C1.Equals(C2));
-
-
-            // messing around
-            //if (Calculate.AreEqual<int>(10, 10))
-            if (Calculate<int>.AreEqual(10, 10))
-            {
-                //Console.WriteLine("Equal");
-            }
-            else
-            {
-                //Console.WriteLine("Not Equal");
-            }
-         }
+            Console.WriteLine(str);
+        }
 
     }
 
@@ -112,18 +80,7 @@ namespace pragrimtech_c_sharp__vs_2019_
 
 
 
-    //public class Calculate
-    public class Calculate<T>
-    {
-        //public static bool AreEqual<T>(T value1, T value2 )
 
-        public static bool AreEqual(T value1, T value2)
-        {
-            return value1.Equals(value2);
-
-        }
-
-    }
 
 
 }
