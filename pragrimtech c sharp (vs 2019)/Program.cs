@@ -6,6 +6,7 @@ using ProjectA.TeamA;
 using ProjectA.TeamB;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 /// <summary>
 /// 
@@ -17,17 +18,39 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            Customer C1 = null;
 
-            // depends on architecture
+            // StringBuilder should be used when there is heavy manipulation
+            // of strings
 
-            // ToString will throw a exception if null
-            string str = C1.ToString();
+            //string userString = "C#";
 
-            // Convert will convert null values to an empty strings " "
-            //string str = Convert.ToString(C1);
+            //// userString will no longer point to the "C#" object it is immutable
+            //// and can't be changed in memory instead another new string object
+            //// will be created for with the value copied over and concatenated to
+            //// make "C# Video" and so on 4 of the 5 objects will essentially be
+            //// discarded as orphaned objects
+            //userString += " Video ";
+            //userString += " Tutorial ";
+            //userString += " for";
+            //userString += " Beginners";
 
-            Console.WriteLine(str);
+            // instead use StringBuilder which is Mutable
+            StringBuilder userString = new StringBuilder("C#");
+            userString.Append(" Video");
+            userString.Append(" Tutorial");
+            userString.Append(" for");
+            userString.Append(" Beginners");
+
+            Console.WriteLine(userString.ToString());
+
+
+            string userStringExample = string.Empty;
+            for (int i = 0; i <= 10000; i++)
+            {
+                userStringExample += i.ToString() + " ";
+            }
+            Console.WriteLine(userStringExample);
+
         }
 
     }
