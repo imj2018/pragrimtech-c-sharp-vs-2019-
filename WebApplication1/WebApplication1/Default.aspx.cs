@@ -11,40 +11,88 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["Session1"] = "Session 1 Data";
-            Session["Session2"] = "Session 2 Data";
+            Company company = new Company();
 
-            //  pull data from first session key i.e Session["Session1"]
-            //  with integral indexer
-            Response.Write("Session 1 Data = " + Session[0].ToString());
-            Response.Write("<br/>");
+            //  .NET can detect the indexer when using square brackets [
+            Response.Write("Name of Employee With Id = 2: " + company[2]);
+            Response.Write("<br />");
+            Response.Write("Name of Employee With Id = 5: " + company[5]);
+            Response.Write("<br />");
+            Response.Write("Name of Employee With Id = 8: " + company[8]);
+            Response.Write("<br />");
 
-            // pull data using string indexer
-            Response.Write("Session 2 Data = " + Session["Session2"].ToString());
+            Response.Write("Changing names of employees with Id = 2, 5 & 8 ");
+            Response.Write("<br />");
+            Response.Write("<br />");
 
-            // example
-            //string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            //using (SqlConnection con = new SqlConnection(CS))
-            //{
-            //    SqlCommand cmd = new SqlCommand("Select * from tblEmployee", con);
-            //    con.Open();
-            //    SqlDataReader rdr = cmd.ExecuteReader();
-            //    while (rdr.Read())
-            //    {
-            //        // Using integral indexer to retrieve Id column value
-            //        Response.Write("Id = " + rdr[0].ToString() + " ");
-            //        // Using string indexer to retrieve Id column value
-            //        Response.Write("Name = " + rdr["Name"].ToString());
-            //    }
-            //}
+            //  using set to change the values
+            company[2] = "2nd Employee name Changed";
+            company[5] = "5th Employee name Changed";
+            company[8] = "8th Employee name Changed";
+
+            Response.Write("Name of Employee With Id = 2: " + company[2]);
+            Response.Write("<br />");
+            Response.Write("Name of Employee With Id = 5: " + company[5]);
+            Response.Write("<br />");
+            Response.Write("Name of Employee With Id = 8: " + company[8]);
+            Response.Write("<br />");
+
+        }
 
     }
 
+    public class Employee
+    {
+        public int EmployeeId { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
 
+    public class Company
+    {
+        private List<Employee> employees;
 
+        //  when a Company object is created so is a List of Employees
+        //  
+        //  would likely load a list of employees from a db in reality
+        public Company()
+        {
+            employees = new List<Employee>()
+            {
+                new Employee() { EmployeeId = 1, Name = "Mike", Gender = "Male" },
+                new Employee() { EmployeeId = 2, Name = "Pam", Gender = "Female" },
+                new Employee() { EmployeeId = 3, Name = "John", Gender = "Male" },
+                new Employee() { EmployeeId = 4, Name = "Maxine", Gender = "Female" },
+                new Employee() { EmployeeId = 5, Name = "Emiliy", Gender = "Female" },
+                new Employee() { EmployeeId = 6, Name = "Scott", Gender = "Male" },
+                new Employee() { EmployeeId = 7, Name = "Todd", Gender = "Male" },
+                new Employee() { EmployeeId = 8, Name = "Ben", Gender = "Male" }
+            };
+        }
 
+        //Company[3] = "Jade";
 
+        //  indexer implementation
+        //
+        //  retrieve the employees using the EmployeeID, while using the employeeID indexer
+        //  change the name of the employees 
+        //
+        //  return type is string for the Name, an indexer is reated using this keyword,
+        //  the indexer syntax is this[int employeeID]
+        public string this[int employeeID]
+        {
+            get
+            {
+                return employees.FirstOrDefault(emp => emp.EmployeeId == employeeID).Name;
+            }
+            set
+            {
+                employees.FirstOrDefault(emp => emp.EmployeeId == employeeID).Name = value;
+            }
+        }
 
+    }
+   
 
 
 
