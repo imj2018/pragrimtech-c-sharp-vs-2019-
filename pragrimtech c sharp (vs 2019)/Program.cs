@@ -20,8 +20,34 @@ namespace pragrimtech_c_sharp__vs_2019_
 
         public static void Main()
         {
-            SamplePartialClass SPC = new SamplePartialClass();
-            SPC.PublicMethod();
+            AddNumbers(10, 20);
+
+            AddNumbers(10, 20, 30, 40, 50);
+
+            //  also create as an object array
+            AddNumbers(10, 20, new object[] { 30, 40, 50 });
+
+        }
+
+        //  to add more than one parameter use a params array
+        // 
+        //  the third parameter becomes optional because of the params keyword
+        // 
+        //  params must be the last parameter
+        public static void AddNumbers(int firstNumber, int secondNumber, 
+            params object[] restOfNumbers)
+        {
+            int result = firstNumber + secondNumber;
+            if (restOfNumbers != null)
+            {
+                foreach (int number in restOfNumbers)
+                {
+                    result += number;
+                }
+            }
+
+            Console.WriteLine("Sum = " + result);
+
         }
    
 
@@ -38,6 +64,7 @@ namespace pragrimtech_c_sharp__vs_2019_
         {
             return this.LastName + ", " + this.FirstName;
         }
+
 
         public override bool Equals(object obj)
         {
