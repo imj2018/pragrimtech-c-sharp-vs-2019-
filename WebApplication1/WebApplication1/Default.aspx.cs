@@ -13,29 +13,28 @@ namespace WebApplication1
         {
             Company company = new Company();
 
-            //  .NET can detect the indexer when using square brackets [
-            Response.Write("Name of Employee With Id = 2: " + company[2]);
-            Response.Write("<br />");
-            Response.Write("Name of Employee With Id = 5: " + company[5]);
-            Response.Write("<br />");
-            Response.Write("Name of Employee With Id = 8: " + company[8]);
+            //  use indexer to change employee with ID of 2 to Mark
+            //company[2] = "Mark";
+
+            Response.Write("Before Update");
             Response.Write("<br />");
 
-            Response.Write("Changing names of employees with Id = 2, 5 & 8 ");
+            //  get total number of male employees using an indexer
+            //  using the get accessor of the indexer
+            Response.Write("Total Male Employees = " + company["Male"]);
+            Response.Write("<br />");
+            Response.Write("Total Female Employees = " + company["Female"]);
+
             Response.Write("<br />");
             Response.Write("<br />");
 
-            //  using set to change the values
-            company[2] = "2nd Employee name Changed";
-            company[5] = "5th Employee name Changed";
-            company[8] = "8th Employee name Changed";
-
-            Response.Write("Name of Employee With Id = 2: " + company[2]);
+            // using the set accessor
+            company["Male"] = "Female";
+            Response.Write("After Update");
             Response.Write("<br />");
-            Response.Write("Name of Employee With Id = 5: " + company[5]);
+            Response.Write("Total Male Employees = " + company["Male"]);
             Response.Write("<br />");
-            Response.Write("Name of Employee With Id = 8: " + company[8]);
-            Response.Write("<br />");
+            Response.Write("Total Female Employees = " + company["Female"]);
 
         }
 
@@ -52,9 +51,6 @@ namespace WebApplication1
     {
         private List<Employee> employees;
 
-        //  when a Company object is created so is a List of Employees
-        //  
-        //  would likely load a list of employees from a db in reality
         public Company()
         {
             employees = new List<Employee>()
@@ -70,15 +66,9 @@ namespace WebApplication1
             };
         }
 
-        //Company[3] = "Jade";
 
-        //  indexer implementation
-        //
-        //  retrieve the employees using the EmployeeID, while using the employeeID indexer
-        //  change the name of the employees 
-        //
-        //  return type is string for the Name, an indexer is reated using this keyword,
-        //  the indexer syntax is this[int employeeID]
+        //  "Company class has got only one indexer with one parameter which is 
+        //  of type integer"
         public string this[int employeeID]
         {
             get
@@ -88,6 +78,26 @@ namespace WebApplication1
             set
             {
                 employees.FirstOrDefault(emp => emp.EmployeeId == employeeID).Name = value;
+            }
+        }
+
+        // overloading indexer
+        public string this[string gender]
+        {
+            get
+            {
+                //  Count returns an integer so a cast to string is needed
+                return employees.Count(emp => emp.Gender == gender).ToString();
+            }
+            set
+            {
+                foreach (Employee employee in employees)
+                {
+                    if (employee.Gender == gender)
+                    {
+                        employee.Gender = value;
+                    }
+                }
             }
         }
 
