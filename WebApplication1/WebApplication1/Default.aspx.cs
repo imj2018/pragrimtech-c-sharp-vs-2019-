@@ -14,11 +14,11 @@ namespace WebApplication1
 
             //TextBox1.Text
 
-            // the use of partial classes are for the designer.cs file is for the
-            // system generated code, while the aspx.cs is for the developers
+            //  the use of partial classes are for the designer.cs file is for the
+            //  system generated code, while the aspx.cs is for the developers
 
-            // partial classes can be used for developers to work on seperate parts of 
-            // a projects
+            //  partial classes can be used for developers to work on seperate parts of 
+            //  a projects
 
             Customer C1 = new Customer();
             C1.FirstName = "Pragim";
@@ -33,7 +33,42 @@ namespace WebApplication1
             };
             string FullName2 = C2.GetFullName();
             Response.Write(FullName2 + "<br/>");
+
+            //  test one partial class as abstract
+            //SamplePartialClass samplePartial = new SamplePartialClass();
+
+            SamplePartialClass samplePartial = new SamplePartialClass();
+            //samplePartial.GetData();
+
         }
 
     }
+
+    //public class Sample : SamplePartialClass
+    //public class Sample
+    //{
+    //    public void GetData()
+    //    {
+
+    //    }
+
+    //}
+
+    //public class Employee
+    //{
+
+    //}
+
+    public interface IEmployee
+    {
+        void EmployeeMethod();
+    }
+
+    public interface ICustomer
+    {
+        void CustomerMethod();
+
+    }
+
+
 }
