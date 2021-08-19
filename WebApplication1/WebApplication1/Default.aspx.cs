@@ -11,53 +11,49 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["Session1"] = "Session 1 Data";
+            Session["Session2"] = "Session 2 Data";
 
-            //TextBox1.Text
+            //  pull data from first session key i.e Session["Session1"]
+            //  with integral indexer
+            Response.Write("Session 1 Data = " + Session[0].ToString());
+            Response.Write("<br/>");
 
-            //  the use of partial classes are for the designer.cs file is for the
-            //  system generated code, while the aspx.cs is for the developers
+            // pull data using string indexer
+            Response.Write("Session 2 Data = " + Session["Session2"].ToString());
 
-            //  partial classes can be used for developers to work on seperate parts of 
-            //  a projects
-
-            Customer C1 = new Customer();
-            C1.FirstName = "Pragim";
-            C1.LastName = "Technologies";
-            string FullName = C1.GetFullName();
-            Response.Write("Full Name = " + FullName + "<br/>");
-
-            PartialCustomer C2 = new PartialCustomer()
-            {
-                FirstName = "Pragim",
-                LastName = "Tech"
-            };
-            string FullName2 = C2.GetFullName();
-            Response.Write(FullName2 + "<br/>");
-
-            //  test one partial class as abstract
-            //SamplePartialClass samplePartial = new SamplePartialClass();
-
-            SamplePartialClass samplePartial = new SamplePartialClass();
-            //samplePartial.GetData();
-
-        }
+            // example
+            //string CS = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            //using (SqlConnection con = new SqlConnection(CS))
+            //{
+            //    SqlCommand cmd = new SqlCommand("Select * from tblEmployee", con);
+            //    con.Open();
+            //    SqlDataReader rdr = cmd.ExecuteReader();
+            //    while (rdr.Read())
+            //    {
+            //        // Using integral indexer to retrieve Id column value
+            //        Response.Write("Id = " + rdr[0].ToString() + " ");
+            //        // Using string indexer to retrieve Id column value
+            //        Response.Write("Name = " + rdr["Name"].ToString());
+            //    }
+            //}
 
     }
 
-    //public class Sample : SamplePartialClass
-    //public class Sample
-    //{
-    //    public void GetData()
-    //    {
 
-    //    }
 
-    //}
 
-    //public class Employee
-    //{
 
-    //}
+
+
+
+
+
+
+
+
+
+
 
     public interface IEmployee
     {
