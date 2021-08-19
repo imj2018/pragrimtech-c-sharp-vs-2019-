@@ -22,20 +22,26 @@ namespace pragrimtech_c_sharp__vs_2019_
         {
             AddNumbers(10, 20);
 
-            AddNumbers(10, 20, 30, 40, 50);
+            //AddNumbers(10, 20, 30, 40, 50);
 
-            //  also create as an object array
-            AddNumbers(10, 20, new object[] { 30, 40, 50 });
+            //AddNumbers(10, 20, new object[] { 30, 40, 50 });
+
+            AddNumbers(10, 20, null);
+
+            AddNumbers(10, 20, new int[] { 30, 40, 50 }); 
 
         }
 
-        //  to add more than one parameter use a params array
-        // 
-        //  the third parameter becomes optional because of the params keyword
-        // 
-        //  params must be the last parameter
+        public static void AddNumbers(int firstNumber, int secondNumber)
+        {
+            //  call the AddNumber method (below), a third parameter can
+            //  be used as alternative to params i.e method overloading for
+            //  optional parameters
+            AddNumbers(firstNumber, secondNumber, null);
+        }
+
         public static void AddNumbers(int firstNumber, int secondNumber, 
-            params object[] restOfNumbers)
+            int[] restOfNumbers)
         {
             int result = firstNumber + secondNumber;
             if (restOfNumbers != null)
