@@ -16,52 +16,17 @@ namespace pragrimtech_c_sharp__vs_2019_
 {
     public class Program
     {
+
+
         public static void Main()
         {
-
-            // StringBuilder should be used when there is heavy manipulation
-            // of strings
-
-            //string userString = "C#";
-
-            //// userString will no longer point to the "C#" object it is immutable
-            //// and can't be changed in memory instead another new string object
-            //// will be created for with the value copied over and concatenated to
-            //// make "C# Video" and so on 4 of the 5 objects will essentially be
-            //// discarded as orphaned objects
-            //userString += " Video ";
-            //userString += " Tutorial ";
-            //userString += " for";
-            //userString += " Beginners";
-
-            // instead use StringBuilder which is Mutable
-            StringBuilder userString = new StringBuilder("C#");
-            userString.Append(" Video");
-            userString.Append(" Tutorial");
-            userString.Append(" for");
-            userString.Append(" Beginners");
-
-            Console.WriteLine(userString.ToString());
-
-
-            string userStringExample = string.Empty;
-            for (int i = 0; i <= 10000; i++)
-            {
-                userStringExample += i.ToString() + " ";
-            }
-            Console.WriteLine(userStringExample);
-
+            SamplePartialClass SPC = new SamplePartialClass();
+            SPC.PublicMethod();
         }
+   
 
     }
 
-    public enum Direction
-    {
-        East = 1,
-        West = 2,
-        North = 3,
-        South = 4
-    }
 
 
     public class Customer
