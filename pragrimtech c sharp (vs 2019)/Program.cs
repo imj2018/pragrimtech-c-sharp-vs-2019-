@@ -18,19 +18,33 @@ namespace pragrimtech_c_sharp__vs_2019_
     public class Program
     {
 
-
         public static void Main()
         {
-            
-            AddNumbers(10, 20, new int[] { 30, 40, 50 });
-            Console.WriteLine("");
+            //  available in any application ASP.NET, MVC etc also other
+            //  languages SQL, XML etc
 
-            AddNumbers(10, 20);
+            //  Tools -> Code Snippet Manager Ctrl  + K, Ctrl + B
+
+            //  right click -> Snippet -> Surround With Ctrl + K, Ctrl + S 
+            for (int i = 0; i < 10; i++)
+            {
+                for (i = 0; i < 10; i++)
+                {
+
+                } 
+            }
+
+            if (true)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+
+                } 
+            }
 
         }
 
 
-        // use the Optional attribute in System.Runtime.InteropServices
         public static void AddNumbers(int firstNumber, int secondNumber, 
             [Optional] params int[] restOfNumbers)
         {
@@ -99,7 +113,6 @@ namespace pragrimtech_c_sharp__vs_2019_
         }
 
     }
-
 
 
 
