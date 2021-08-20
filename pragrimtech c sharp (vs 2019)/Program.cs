@@ -20,42 +20,56 @@ namespace pragrimtech_c_sharp__vs_2019_
 
         public static void Main()
         {
+            
+            AddNumbers(10, 20, new int[] { 30, 40, 50 });
+            Console.WriteLine("");
+
             AddNumbers(10, 20);
+            Console.WriteLine("");
 
-            //AddNumbers(10, 20, 30, 40, 50);
+            //Test(1);
 
-            //AddNumbers(10, 20, new object[] { 30, 40, 50 });
-
-            AddNumbers(10, 20, null);
-
-            AddNumbers(10, 20, new int[] { 30, 40, 50 }); 
+            //  use named parameters to pass a value for paramter c (int c = 20)
+            //  i.e skip the second parameter which will use the default value and
+            //  set = 2 
+            Test(1, c: 2);
 
         }
 
-        public static void AddNumbers(int firstNumber, int secondNumber)
-        {
-            //  call the AddNumber method (below), a third parameter can
-            //  be used as alternative to params i.e method overloading for
-            //  optional parameters
-            AddNumbers(firstNumber, secondNumber, null);
-        }
-
+        //  set a default parameter to make it optional
+        //  i.e int[] restOfNumbers = null
+        //
+        //  as in previous example, optional parameters must be last
         public static void AddNumbers(int firstNumber, int secondNumber, 
-            int[] restOfNumbers)
+            //int[] restOfNumbers = null)
+            params int[] restOfNumbers)
         {
             int result = firstNumber + secondNumber;
+
+            //  false if no third parameter passed, loop won't be executed
             if (restOfNumbers != null)
             {
                 foreach (int number in restOfNumbers)
                 {
                     result += number;
                 }
+
+                Console.WriteLine("Sum with default/optional paramter = " + result);
             }
 
             Console.WriteLine("Sum = " + result);
 
         }
-   
+
+        //  a is mandatory, b and c are optional as a default parameter is set
+        public static void Test(int a, int b = 10, int c = 20)
+        {
+            Console.WriteLine("a = " + a);
+            Console.WriteLine("b = " + b);
+            Console.WriteLine("c = " + c);
+
+        }
+
 
     }
 
