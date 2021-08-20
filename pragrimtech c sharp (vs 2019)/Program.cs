@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 
@@ -47,78 +48,118 @@ namespace pragrimtech_c_sharp__vs_2019_
                 Salary = 4000
             };
 
+            //Dictionary<int, Customer> dictionaryCustomers = new Dictionary<int, Customer>();
+            //dictionaryCustomers.Add(customer1.ID, customer1);
+            //dictionaryCustomers.Add(customer2.ID, customer2);
+            //dictionaryCustomers.Add(customer3.ID, customer3);
+            //dictionaryCustomers.Add(customer4.ID, customer4);
 
-            //  key will be the ID which is type int, the value type is the Customer object itself
-            Dictionary<int, Customer> dictionaryCustomers = new Dictionary<int, Customer>();
-            dictionaryCustomers.Add(customer1.ID, customer1);
-            dictionaryCustomers.Add(customer2.ID, customer2);
-            dictionaryCustomers.Add(customer3.ID, customer3);
-            dictionaryCustomers.Add(customer4.ID, customer4);
+            Dictionary<int, Customer> dictionaryCustomers =
+                new Dictionary<int, Customer>()
+                {
+                    { customer1.ID, customer1 },
+                    { customer2.ID, customer2 },
+                    { customer3.ID, customer3 },
+                    { customer4.ID, customer4 },
+                };
 
-            // key must be unique, check with ContainsKey which returns a bool
-            if (!dictionaryCustomers.ContainsKey(customer1.ID))
+            //dictionaryCustomers[101];
+
+            Customer c1;
+
+            //  if there is a key 101 the second parameter will receive the value
+            //  based on the key (out paramter)
+            //dictionaryCustomers.TryGetValue(101, out c1)
+            if(dictionaryCustomers.TryGetValue(111, out c1))
             {
-                dictionaryCustomers.Add(customer1.ID, customer1);
+                Console.WriteLine("{0}  {1}  {2}", 
+                    c1.ID, c1.Name, c1.Salary);
             }
-
-            // will throw a runtime error if a key does not exist
-            if (dictionaryCustomers.ContainsKey(135))
+            else
             {
-                Customer customerDoesNotExist = dictionaryCustomers[135];
+                Console.WriteLine("The key is not found");
             }
-
-
-            //  opening square brackets automatically prompts for the key (Customer ID
-            //  of type int) 
-            // 
-            //  a customer object is returned
-            //dictionaryCustomers[047];         
-            Customer customer47 = dictionaryCustomers[101];
-
-            Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}", 
-                customer47.ID, customer47.Name, customer47.Salary);
             Console.WriteLine("");
 
+            //  counts all the items and returns an int 
+            //Console.WriteLine("Total items = {0}", dictionaryCustomers.Count);
 
-            //  a Dictionary is a collection of key value pairs
-            //  the type of the key ID is int, the value type is Customer 
+            //  the Count method is different i.e a LINQ extension method
             //
-            //  avoid var, easier to explicitely state KeyValuePair<int, Customer>
-            //  to know the type
-            //foreach (KeyValuePair<int, Customer> customerKeyValuePair in dictionaryCustomers)
-            foreach (var customerKeyValuePair in dictionaryCustomers)
+            //  pass a predicate, kvp (key value pair) such that kvp.Value.Salary > 4000
+            //  if true that employee will be included in the Count
+            Console.WriteLine("Total items = {0}", 
+                dictionaryCustomers.Count(kvp => kvp.Value.Salary > 4000));
+
+            int c2 = dictionaryCustomers.Count(kvp => kvp.Value.ID == (int)Names.IllidanStormrage);
+            Console.WriteLine(c2);
+
+            //  remove item based on ID
+            //dictionaryCustomers.Remove(103);
+
+            //  remove all items
+            //dictionaryCustomers.Clear();
+
+
+            //  convert an array to a Dictionary
+            Customer[] customersArray = new Customer[3]
             {
-                Console.WriteLine("Key = {0}", customerKeyValuePair.Key);
+                customer1,
+                customer2,
+                customer3
+            };
 
-                //  Value is returning a Customer object
-                Customer customer = customerKeyValuePair.Value;
+            // converting from a List to a Dictionary will be the same
+            List<Customer> customersList = new List<Customer>()
+            {
+                customer1,
+                customer2,
+                customer3
+            };
 
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}", 
+            // the key will be Customer ID, the value will be a customer object
+            // 
+            // ToDictionary will return a Dictionary
+            Dictionary<int, Customer> dictionaryConversion =
+                //customersArray.ToDictionary(cust => cust.ID, cust => cust);
+                customersList.ToDictionary(cust => cust.ID, cust => cust);
+
+
+
+            foreach (KeyValuePair<int, Customer> kvp in dictionaryConversion)
+            {
+                Console.WriteLine("Key = {0}", kvp.Key);
+
+                Customer customer = kvp.Value;
+                Console.WriteLine("ID = {0}, Name ={1}, Salary ={2}", 
                     customer.ID, customer.Name, customer.Salary);
-                Console.WriteLine("--------------------------------------------------------");
             }
-            Console.WriteLine("");
 
 
-            // just get keys
-            foreach (int key in dictionaryCustomers.Keys)
+
+
+
+
+
+            //  messing around
+            foreach (KeyValuePair<int, Customer> customer in dictionaryCustomers)
             {
-                Console.WriteLine(key);
+                //Console.WriteLine(customer.Value.Name);
             }
-            Console.WriteLine("");
-
-            // just get values 
-            foreach (Customer customer in dictionaryCustomers.Values)
-            {
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}", 
-                    customer.ID, customer.Name, customer.Salary);
-            }
-            Console.WriteLine("");
-
+            //Console.WriteLine("");
 
         }
 
     }
+
+    public enum Names
+    {
+        Agent47 = 101,
+        IllidanStormrage = 102, 
+        MasterChief = 103,
+        Warden = 104 
+    }
+
 
 
     public class Customer 
