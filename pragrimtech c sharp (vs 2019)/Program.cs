@@ -7,6 +7,7 @@ using ProjectA.TeamB;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// 
@@ -25,36 +26,22 @@ namespace pragrimtech_c_sharp__vs_2019_
             Console.WriteLine("");
 
             AddNumbers(10, 20);
-            Console.WriteLine("");
-
-            //Test(1);
-
-            //  use named parameters to pass a value for paramter c (int c = 20)
-            //  i.e skip the second parameter which will use the default value and
-            //  set = 2 
-            Test(1, c: 2);
 
         }
 
-        //  set a default parameter to make it optional
-        //  i.e int[] restOfNumbers = null
-        //
-        //  as in previous example, optional parameters must be last
+
+        // use the Optional attribute in System.Runtime.InteropServices
         public static void AddNumbers(int firstNumber, int secondNumber, 
-            //int[] restOfNumbers = null)
-            params int[] restOfNumbers)
+            [Optional] params int[] restOfNumbers)
         {
             int result = firstNumber + secondNumber;
 
-            //  false if no third parameter passed, loop won't be executed
             if (restOfNumbers != null)
             {
                 foreach (int number in restOfNumbers)
                 {
                     result += number;
                 }
-
-                Console.WriteLine("Sum with default/optional paramter = " + result);
             }
 
             Console.WriteLine("Sum = " + result);
