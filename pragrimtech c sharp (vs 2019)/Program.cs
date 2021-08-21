@@ -49,122 +49,131 @@ namespace pragrimtech_c_sharp__vs_2019_
             };
 
 
-            //  out of range exception, arrays do not grow in size
-            //Customer[] customers = new Customer[2]
-            //{
-            //    customer1,
-            //    customer2,
-            //    customer3
-            //};
-
-
-            //  can set a size to a List like so List<Customer>(2)
-            //  but the size will automatically grow beyond the set amount
-            List<Customer> customers = new List<Customer>(2)
+            List<Customer> customers = new List<Customer>()
             {
                 customer1,
                 customer2,
                 customer3,
-                //sc 
 
             };
 
-            //  strongly typed cannot add any type must be Customer
-            //customers.Add(101);
-
-            //  though strongly typed but possible to add a class that is inherited
-            //  i.e SavingsCustomer inherits from Customer so it can be added
-            SavingsCustomer sc = new SavingsCustomer();
-            //customers.Add(sc);
-
-            //  insert an object at a specific location, doing so will push the other
-            //  objects further down 
-            customers.Insert(0, customer3);
-
-            foreach (var item in customers)
+            //  returns a bool and checks if objects exists, can't pass a condition
+            if(customers.Contains(customer3))
             {
-                Console.WriteLine(item.ID);
+                Console.WriteLine("Customer3 object exists in the list");
+
+            }
+            else
+            {
+                Console.WriteLine("Customer3 object does not exists in the list");
             }
             Console.WriteLine("");
 
 
-            //  IndexOf to get the index of an item in the List
-            //  index 0 is returned, customer3 is pointed from 2 positions (0 and 3) but it will
-            //  return the first by default
-            //int position = customers.IndexOf(customer3);
-
-            //  second parameter can denote where to start, from position 1 it will start looking
-            //  and return index 3 (last position of customer3)
-            //position = customers.IndexOf(customer3, 1);
-
-            //  third parameter can denote how many elements to look for i.e from position
-            //  how many many elements to look through
-            int position = customers.IndexOf(customer3, 1, 4);
-
-            Console.WriteLine("Position = {0}", position);
-            Console.WriteLine("");
-
-
-            Customer c = customers[0];
-            Console.WriteLine("ID = {0}, Name = {1}, Salary = {2} ",
-                c.ID, c.Name, c.Salary);
-            Console.WriteLine("");
-
-            foreach (Customer customer in customers)
+            //  also expects a predicate/lambda but only returns the first matching
+            //  item
+            if (customers.Exists(c => c.Name.StartsWith("I")))
             {
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2} ",
+                Console.WriteLine(true);
+            }
+            else
+            {
+                Console.WriteLine(false);
+            }
+            Console.WriteLine("");
+
+
+            //  unlike Contains, Exists that will only tell you if the object exists
+            //  an actual object is returned not a bool
+            Customer c = customers.Find(c => c.Salary > 4000);
+            Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}", c.ID, c.Name, c.Salary); ;
+            Console.WriteLine("");
+
+
+            // find the last matching item based on condition
+            Customer cl = customers.FindLast(cl => cl.Salary > 4000);
+            Console.WriteLine("");
+
+
+            List<Customer> cA = customers.FindAll(cA => cA.Salary > 4000);
+            foreach (var customer in cA)
+            {
+                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
                     customer.ID, customer.Name, customer.Salary);
 
             }
             Console.WriteLine("");
 
-            //  <= can cause an out of bounds exception as the Count is 3
-            //  when <= is 4 (0, 1, 2, 3) so foreach should be used when 
-            //  just needing to loop through a collection
-            for (int i = 0; i < customers.Count; i++)
+            //  only return index of the first matching item
+            int index = customers.FindIndex(cA => cA.Salary > 4000);
+
+            //  specify starting index (starting index 2)
+            index = customers.FindIndex(2, cA => cA.Salary > 2000);
+
+            //  id doesn't exist -1
+            if (index > 0)
             {
-                //Console.WriteLine("ID = {0}, Name = {1}, Salary = {2} ",
-                //    customers[i].ID, customers[i].Name, customers[i].Salary);
-
-                Customer customer = customers[i];
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2} ",
-                    customer.ID, customer.Name, customer.Salary);
-
+                Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
             }
             Console.WriteLine("");
 
+            //  can also use count for how many items/ range of those elements to look up
+            //  start index, count, predicate
+            index = customers.FindIndex(1, 2, cA => cA.Salary > 2000);
+            Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
+            Console.WriteLine("");
+
+            index = customers.FindLastIndex(cA => cA.Salary > 2000);
+            Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
+            Console.WriteLine("");
 
 
+            Customer[] customerArray = new Customer[3]
+            {
+                customer1,
+                customer2,
+                customer3
+            };
 
+            //  convert array to List
+            List<Customer> customersList = customerArray.ToList();
+            foreach (var customer in customersList)
+            {
+                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
+                    customer.ID, customer.Name, customer.Salary);
+            }
+            Console.WriteLine("");
+
+            //  conver back to array
+            Customer[] customersBackToArray = customersList.ToArray();
+
+            //  convert List to a Dictionary, the key needs to be specified and the value,
+            //  the value is optional and by default if no value is specified it will use
+            //  the object (Customer object)
+            Dictionary<int, Customer> customersDictonary = 
+                customersList.ToDictionary(c => c.ID, c => c);
+
+            foreach (KeyValuePair<int, Customer> kvp in customersDictonary)
+            {
+                Console.WriteLine("Key = {0}", kvp.Key);
+                Customer customer = kvp.Value;
+                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
+                    customer.ID, customer.Name, customer.Salary);
+            }
+            Console.WriteLine("");
 
 
 
             //  practice Dictionary collection
-            Dictionary<int, Customer> dictionaryCustomers =
-                new Dictionary<int, Customer>()
-                {
-                    {customer1.ID, customer1 },
-                    {customer2.ID, customer2 },
-                    {customer3.ID, customer3 },
-                    {customer4.ID, customer4 },
+            //Dictionary<int, Customer> dictionaryCustomers =
+            //    new Dictionary<int, Customer>()
+            //    {
+            //        {customer1.ID, customer1 },
+            //        {customer2.ID, customer2 },
+            //        {customer3.ID, customer3 },
+            //        {customer4.ID, customer4 },
 
-                };
-
-
-            foreach (KeyValuePair<int, Customer> keyValuePair in dictionaryCustomers)
-            {
-                int key = keyValuePair.Key;
-                Customer customer = keyValuePair.Value;
-
-                Console.WriteLine("Key = {0}", key);
-                //Console.WriteLine("{0}  {1}  {2} ", keyValuePair.Value.ID, 
-                //    keyValuePair.Value.Name, keyValuePair.Value.Salary);
-                Console.WriteLine("{0}  {1}  {2} ", customer.ID, 
-                    customer.Name, customer.Salary);
-
-            }
-
-            dictionaryCustomers.Count(c => c.Value.Name == "The Warden");
+            //    };
 
         }
 
