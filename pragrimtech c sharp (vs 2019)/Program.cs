@@ -16,164 +16,104 @@ using System.Linq;
 /// </summary>
 namespace pragrimtech_c_sharp__vs_2019_
 {
+
+    public class OneHitWonders
+    {
+        public static List<Song> DetermineOneHitWonders(List<Song> songs)
+        {
+            List<Song> oneHitWonders = new List<Song>();
+            foreach (Song song in songs)
+            {
+                bool oneHit = true;
+                foreach (Song otherSong in songs)
+                {
+                    if (otherSong.Id != song.Id && otherSong.Artist == song.Artist) oneHit = false;
+                }
+                if (oneHit) oneHitWonders.Add(song);
+            }
+            return oneHitWonders;
+        }
+
+        public static List<Song> NewDetermineOneHitWonders(List<Song> songs)
+        {
+            List<Song> oneHitWonders = new List<Song>();
+
+            var temp1 = songs.GroupBy(s => s.Artist).Where(b => b.Count() == 1).ToList();
+                        
+            foreach(var v in temp1)
+            {
+                oneHitWonders.AddRange(songs.Where(a => a.Artist == v.Key).ToList());
+                    
+            }
+            return oneHitWonders;
+        }
+    }
+
+    public class Song
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Artist { get; set; }
+    }
+
+
     public class Program
     {
         public static void Main()
         {
-            Customer customer1 = new Customer()
+            Song song1 = new Song()
             {
-                ID = 101,
-                Name = "Agent 47",
-                Salary = 5000
+                Id = 1,
+                Name = "n1",
+                Artist = "ed sheeran"
             };
 
-            Customer customer2 = new Customer()
+            Song song2 = new Song()
             {
-                ID = 102,
-                Name = "Illidan Stormrage",
-                Salary = 6500
+                Id = 2,
+                Name = "n2",
+                Artist = "bob"
             };
 
-            Customer customer3 = new Customer()
+            Song song3 = new Song()
             {
-                ID = 103,
-                Name = "John 117",
-                Salary = 3500
+                Id = 3,
+                Name = "n3",
+                Artist = "ed sheeran"
             };
 
-            Customer customer4 = new Customer()
+            Song song4 = new Song()
             {
-                ID = 104,
-                Name = "The Warden",
-                Salary = 4000
+                Id = 4,
+                Name = "n4",
+                Artist = "bob"
             };
 
-
-            List<Customer> customers = new List<Customer>()
+            Song song5 = new Song()
             {
-                customer1,
-                customer2,
-                customer3,
-
+                Id = 5,
+                Name = "n5",
+                Artist = "james"
             };
 
-            //  returns a bool and checks if objects exists, can't pass a condition
-            if(customers.Contains(customer3))
+            List<Song> songs = new List<Song>()
             {
-                Console.WriteLine("Customer3 object exists in the list");
-
-            }
-            else
-            {
-                Console.WriteLine("Customer3 object does not exists in the list");
-            }
-            Console.WriteLine("");
-
-
-            //  also expects a predicate/lambda but only returns the first matching
-            //  item
-            if (customers.Exists(c => c.Name.StartsWith("I")))
-            {
-                Console.WriteLine(true);
-            }
-            else
-            {
-                Console.WriteLine(false);
-            }
-            Console.WriteLine("");
-
-
-            //  unlike Contains, Exists that will only tell you if the object exists
-            //  an actual object is returned not a bool
-            Customer c = customers.Find(c => c.Salary > 4000);
-            Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}", c.ID, c.Name, c.Salary); ;
-            Console.WriteLine("");
-
-
-            // find the last matching item based on condition
-            Customer cl = customers.FindLast(cl => cl.Salary > 4000);
-            Console.WriteLine("");
-
-
-            List<Customer> cA = customers.FindAll(cA => cA.Salary > 4000);
-            foreach (var customer in cA)
-            {
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
-                    customer.ID, customer.Name, customer.Salary);
-
-            }
-            Console.WriteLine("");
-
-            //  only return index of the first matching item
-            int index = customers.FindIndex(cA => cA.Salary > 4000);
-
-            //  specify starting index (starting index 2)
-            index = customers.FindIndex(2, cA => cA.Salary > 2000);
-
-            //  id doesn't exist -1
-            if (index > 0)
-            {
-                Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
-            }
-            Console.WriteLine("");
-
-            //  can also use count for how many items/ range of those elements to look up
-            //  start index, count, predicate
-            index = customers.FindIndex(1, 2, cA => cA.Salary > 2000);
-            Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
-            Console.WriteLine("");
-
-            index = customers.FindLastIndex(cA => cA.Salary > 2000);
-            Console.WriteLine("Index = {0}, Name = {1}", index, customers[index].Name);
-            Console.WriteLine("");
-
-
-            Customer[] customerArray = new Customer[3]
-            {
-                customer1,
-                customer2,
-                customer3
+                song1,
+                song2,
+                song3,
+                song4,
+                song5
             };
 
-            //  convert array to List
-            List<Customer> customersList = customerArray.ToList();
-            foreach (var customer in customersList)
+            List<Song> oneHitList = OneHitWonders.NewDetermineOneHitWonders(songs);
+
+            foreach (var item in oneHitList)
             {
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
-                    customer.ID, customer.Name, customer.Salary);
+                Console.WriteLine(item.Id + " " + item.Name + " " + item.Artist);
             }
-            Console.WriteLine("");
-
-            //  conver back to array
-            Customer[] customersBackToArray = customersList.ToArray();
-
-            //  convert List to a Dictionary, the key needs to be specified and the value,
-            //  the value is optional and by default if no value is specified it will use
-            //  the object (Customer object)
-            Dictionary<int, Customer> customersDictonary = 
-                customersList.ToDictionary(c => c.ID, c => c);
-
-            foreach (KeyValuePair<int, Customer> kvp in customersDictonary)
-            {
-                Console.WriteLine("Key = {0}", kvp.Key);
-                Customer customer = kvp.Value;
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}",
-                    customer.ID, customer.Name, customer.Salary);
-            }
-            Console.WriteLine("");
 
 
 
-            //  practice Dictionary collection
-            //Dictionary<int, Customer> dictionaryCustomers =
-            //    new Dictionary<int, Customer>()
-            //    {
-            //        {customer1.ID, customer1 },
-            //        {customer2.ID, customer2 },
-            //        {customer3.ID, customer3 },
-            //        {customer4.ID, customer4 },
-
-            //    };
 
         }
 
