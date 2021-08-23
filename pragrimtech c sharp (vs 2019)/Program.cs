@@ -79,59 +79,55 @@ namespace pragrimtech_c_sharp__vs_2019_
                 customer5
             };
 
+            customers.AddRange(customersCorporate);
+
+
+            //  the constructor of Comparison (Comparison delegate expects a function
+            //  that returns a type integer and Customer object parameters. the name
+            //  of function CompareCustomer can be passed 
+            //
+            Comparison<Customer> customerComparer =
+                new Comparison<Customer>(CompareCustomer);
 
             Console.WriteLine("Before Sorting");
             foreach (Customer customer in customers)
             {
-                Console.WriteLine(customer.Name + " " + customer.Salary); 
+                Console.WriteLine(customer.ID);
             }
-            Console.WriteLine("");
 
 
-            customers.Sort();
-            customers.Reverse();
-
-
+            //  expecting a Comparison delegate
+            //
             Console.WriteLine("After Sorting");
+            customers.Sort(customerComparer);
+
             foreach (Customer customer in customers)
             {
-                Console.WriteLine(customer.Name + " " + customer.Salary);
+                Console.WriteLine(customer.ID);
             }
-            Console.WriteLine("");
 
 
-            SortByName sortByName = new SortByName();
-
-            //  if no argument is passed by default the Sort method
-            //  from the class wil be used. but you can provide your own sort logic
-            //  i.e SortByName class can be implemented then passed as an
-            //  argument as it implements IComparer
-            customers.Sort(sortByName);
-
-            Console.WriteLine("Sorting by Name");
-            foreach (Customer customer in customers)
-            {
-                Console.WriteLine(customer.Name);
-            }
-            Console.WriteLine("");
+            //  simplified by passing by using the delegate keyword directly
+            // 
+            Console.WriteLine("pass using the delegate keyword");
+            customers.Sort(delegate(Customer c1, Customer c2)
+            { return c1.ID.CompareTo(c2.ID); });
 
 
+            //  simplified by passing a lambda, two customer objects (x,y) such
+            //  that compare x.ID with y.ID
+            //
+            Console.WriteLine("pass a lambda");
+            customers.Sort((x, y) => x.ID.CompareTo(y.ID));
 
 
+        }
 
-            //  messing around with List to Dictionary
-            customers.AddRange(customersCorporate);
-
-            Dictionary<int, Customer> customerDictionary = 
-                customers.ToDictionary(c => c.ID);
-
-            foreach (KeyValuePair<int,Customer> keyValuePair in customerDictionary)
-            {
-                Customer customer = keyValuePair.Value;
-                Console.WriteLine(customer.Name);
-            }
-            
-
+        private static int CompareCustomer(Customer x, Customer y)
+        {
+            //  compare ID of Customer object x with y
+            //
+            return x.ID.CompareTo(y.ID);
         }
 
     }
