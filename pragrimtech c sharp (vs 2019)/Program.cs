@@ -78,67 +78,66 @@ namespace pragrimtech_c_sharp__vs_2019_
                 customer5
             };
 
+            List<int> numbers = new List<int>() { 1, 8, 7, 5, 2, 3, 4, 9, 6 };
 
-            //  previously we were adding one item at a time, AddRange
-            //  will add a List to another List
-            //customers.AddRange(customersCorporate);
-
-            foreach (Customer customer in customers)
+            Console.WriteLine("Numbers before sorting");
+            foreach (int number in numbers)
             {
-                //Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}, Type = {3}",
-                //    customer.ID, customer.Name, customer.Salary, customer.Type);
+                Console.WriteLine(number);
             }
-            Console.WriteLine("");
 
+            numbers.Sort();
 
-            //  from index position 3 I want 2 items 
-            //  index 3 is item 4, including that item at index 3 (customer4) for the
-            //  count so customer4, customer5 i.e all CorporateCustomer type
-            //List<Customer> getCorporateCustomer = customers.GetRange(3, 2);
-
-            //foreach (Customer customer in getCorporateCustomer)
+            Console.WriteLine("Numbers after sorting");
+            foreach (int number in numbers)
             {
-                //Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}, Type = {3}",
-                //    customer.ID, customer.Name, customer.Salary, customer.Type);
+                Console.WriteLine(number);
             }
-            Console.WriteLine("");
 
+            numbers.Reverse();
 
-            //  I want only the RetailCustomers, from index 0 I want 3 (including 0)
-            List<Customer> getRetailCustomers = customers.GetRange(0, 3);
-
-            foreach (Customer customer in getRetailCustomers)
+            Console.WriteLine("Numbers in descending order");
+            foreach (int number in numbers)
             {
-                //Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}, Type = {3}",
-                //    customer.ID, customer.Name, customer.Salary, customer.Type);
+                Console.WriteLine(number);
             }
-            Console.WriteLine("");
 
+            List<string> alphabet = new List<string>() { "B", "F", "D", "E", "A", "C" };
 
-            //  insert a List at a position i.e 0 so the top
-            //customers.InsertRange(0, customersCorporate);
-
-            //  insert by index to the bottom of the List
-            customers.InsertRange(3, customersCorporate);
-
-            //customers.Remove(customer1);
-
-            //customers.RemoveAt(1);
-
-            //  to remove all items using a predicate/lambda to remove all
-            //  CorporateCustomer type
-            customers.RemoveAll(cc => cc.Type == "CorporateCustomer");
-
-            //  from index 3whatever remove those items
-            //customers.RemoveRange(3, 2);
-            customers.RemoveRange(0, 3);
-
-            foreach (Customer customer in customers)
+            Console.WriteLine("Alphabet before sorting");
+            foreach (string letter in alphabet)
             {
-                Console.WriteLine("ID = {0}, Name = {1}, Salary = {2}, Type = {3}",
-                    customer.ID, customer.Name, customer.Salary, customer.Type);
+                Console.WriteLine(letter);
             }
-            Console.WriteLine("");
+
+            alphabet.Sort();
+
+            Console.WriteLine("Alphabet after sorting");
+            foreach (string letter in alphabet)
+            {
+                Console.WriteLine(letter);
+            }
+
+            alphabet.Reverse();
+
+            Console.WriteLine("Alphabet in descending order");
+            foreach (string letter in alphabet)
+            {
+                Console.WriteLine(letter);
+            }
+
+
+            //  attempting to use Sort on custom/complex types (Customer List)
+            //  will throw an exception as .NET does not know how to sort complex types
+            //  .NET needs to be told how to sort them at run time
+            //
+            //  simple types already implement IComparable and have a CompareTo method
+            //  within the .NET framework
+            // 
+            customers.Sort();
+
+
+
 
 
 
