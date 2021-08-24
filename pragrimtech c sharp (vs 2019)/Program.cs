@@ -58,6 +58,13 @@ namespace pragrimtech_c_sharp__vs_2019_
             };
 
 
+            // Queue is a generic FIFO (First In First Out) collection class that is present in System.Collections.Generic namespace.
+            // The Queue collection class is analogous to a queue at the ATM machine to withdraw money. The order in which people queue up,
+            // will be the order in which they will be able to get out of the queue and withdraw money from the ATM. The Queue collection
+            // class operates in a similar fashion. The first item to be added (enqueued) to the queue, will be the first item to be removed
+            // (dequeued) from the Queue.
+
+
             //  objects will be added to the Queue one after another
             //  with Enqueue
             //
