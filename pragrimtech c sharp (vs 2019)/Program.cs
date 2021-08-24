@@ -22,115 +22,129 @@ namespace pragrimtech_c_sharp__vs_2019_
     {
         public static void Main()
         {
-            Customer customer1 = new Customer()
-            {
-                ID = 101,
-                Name = "Agent 47",
-                Salary = 5000,
-                Type = "RetailCustomer"
-            };
+            Country country1 = new Country() { Code = "AUS", Name = "AUSTRALIA", Capital = "Canberra" };
+            Country country2 = new Country() { Code = "IND", Name = "INDIA", Capital = "New Delhi" };
+            Country country3 = new Country() { Code = "USA", Name = "UNITED STATES", Capital = "Washigton D.C." };
+            Country country4 = new Country() { Code = "GBR", Name = "UNITED KINGDOM", Capital = "London" };
+            Country country5 = new Country() { Code = "CAN", Name = "CANADA", Capital = "Ottawa" };
 
-            Customer customer2 = new Customer()
-            {
-                ID = 102,
-                Name = "Illidan Stormrage",
-                Salary = 6500,
-                Type = "RetailCustomer"
-
-            };
-
-            Customer customer3 = new Customer()
-            {
-                ID = 103,
-                Name = "John 117",
-                Salary = 3500,
-                Type = "RetailCustomer"
-
-            };
-
-            Customer customer4 = new Customer()
-            {
-                ID = 104,
-                Name = "The Warden",
-                Salary = 4000,
-                Type = "CorporateCustomer"
-
-            };
-
-            Customer customer5 = new Customer()
-            {
-                ID = 105,
-                Name = "Scorpion",
-                Salary = 3000,
-                Type = "CorporateCustomer"
-
-            };
-
-            List<Customer> customers = new List<Customer>(100)
-            {
-                customer1,
-                customer2,
-                customer3,
-
-            };
-
-            List<Customer> customersCorporate = new List<Customer>()
-            {
-                customer4,
-                customer5
-
-            };
-
-            customers.AddRange(customersCorporate);
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-            //  mess around TrueForAll
-            //if (!customers.TrueForAll(x => x.ID == 106))
-            //{
-            //    customers.Add(new Customer { ID = 106, Name = "arbiter" });
-            //}
-
-            //foreach (var item in customers)
-            //{
-            //    Console.WriteLine(item.Name);
-            //}
-
-
-            //  mess around Sort delegate, pass lambdas
-            Console.WriteLine("pass using the delegate keyword");
-            customers.Sort(delegate (Customer c1, Customer c2)
-            { return c1.ID.CompareTo(c2.ID); });
-
-
-            //  simplified by passing a lambda, two customer objects (x,y) such
-            //  that compare x.ID with y.ID
+            #region
+            //  using a List/this approach is not as efficient for this scenario as we it loop through each value
+            //  and check a Dictionary is much more efficient for Finding objects/valyes using keys
             //
-            Console.WriteLine("pass a lambda");
-            customers.Sort((x, y) => x.ID.CompareTo(y.ID));
-            customers.Reverse();
+            //List<Country> listCountries = new List<Country>()
+            //{
+            //    country1,
+            //    country2,
+            //    country3,
+            //    country4,
+            //    country5
+            //};
 
-            foreach (Customer item in customers)
+            //  do all this while some condition
+            // 
+            //  the user choice needs to be declared outside of scope
+            //
+            //string strUserChoice = "";
+
+            //do
+            //{
+            //    Console.WriteLine("Please enter country Code");
+            //    string strCountryCode = Console.ReadLine().ToUpper();
+
+            //    //  return a Country object based on what user has passed using Find based
+            //    //  on the predicate/lambda
+            //    //
+            //    Country resultCountry = listCountries.Find(country => country.Code == strCountryCode);
+
+            //    if (resultCountry == null)
+            //    {
+            //        Console.WriteLine("Country code not valid");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Name = {0}, Capital = {1}", resultCountry.Name, resultCountry.Capital);
+            //    }
+
+            //    do
+            //    {
+            //        Console.WriteLine("Do you want to continue - YES or NO?");
+            //        strUserChoice = Console.ReadLine().ToUpper();
+            //    }
+            //    while (strUserChoice != "YES" && strUserChoice != "NO");
+
+            //}
+
+            //while (strUserChoice == "YES");
+            #endregion
+
+            Dictionary<string, Country> dictionaryCountries = new Dictionary<string, Country>()
             {
-                Console.WriteLine(item.Name);
+                { country1.Code, country1 },
+                { country2.Code, country2 },
+                { country3.Code, country3 },
+                { country4.Code, country4 },
+                { country5.Code, country5 },
+
+            };
+
+
+            //do all this while some condition
+
+            //the user choice needs to be declared outside of scope
+
+
+            string strUserChoice = string.Empty;
+
+            do
+            {
+                Console.WriteLine("Please enter country Code");
+                string strCountryCode = Console.ReadLine().ToUpper();
+
+                //  return a Country object back
+                // 
+                //  an exception will be thrown if the key is not found so ContainsKey
+                //  can be used to check 
+                //
+                Country resultCountry = dictionaryCountries.ContainsKey(strCountryCode) 
+                    ? dictionaryCountries[strCountryCode]
+                    : null;
+
+                if (resultCountry == null)
+                {
+                    Console.WriteLine("Country code not valid");
+                }
+                else
+                {
+                    Console.WriteLine("Name = {0}, Capital = {1}", resultCountry.Name, resultCountry.Capital);
+                }
+
+                do
+                {
+                    Console.WriteLine("Do you want to continue - YES or NO?");
+                    strUserChoice = Console.ReadLine().ToUpper();
+                }
+                while (strUserChoice != "YES" && strUserChoice != "NO");
+
             }
+
+            while (strUserChoice == "YES");
+
+
+
+
 
         }
 
     }
 
+    public class Country
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Capital { get; set; }
+
+    }
 
     public class Customer
     {
