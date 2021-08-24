@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// 
@@ -65,7 +66,7 @@ namespace pragrimtech_c_sharp__vs_2019_
 
             };
 
-            List<Customer> customers = new List<Customer>()
+            List<Customer> customers = new List<Customer>(100)
             {
                 customer1,
                 customer2,
@@ -77,40 +78,40 @@ namespace pragrimtech_c_sharp__vs_2019_
             {
                 customer4,
                 customer5
+
             };
 
             customers.AddRange(customersCorporate);
 
 
-            //  the constructor of Comparison (Comparison delegate expects a function
-            //  that returns a type integer and Customer object parameters. the name
-            //  of function CompareCustomer can be passed 
-            //
-            Comparison<Customer> customerComparer =
-                new Comparison<Customer>(CompareCustomer);
-
-            Console.WriteLine("Before Sorting");
-            foreach (Customer customer in customers)
-            {
-                Console.WriteLine(customer.ID);
-            }
 
 
-            //  expecting a Comparison delegate
-            //
-            Console.WriteLine("After Sorting");
-            customers.Sort(customerComparer);
-
-            foreach (Customer customer in customers)
-            {
-                Console.WriteLine(customer.ID);
-            }
 
 
-            //  simplified by passing by using the delegate keyword directly
-            // 
+
+
+
+
+
+
+
+
+
+            //  mess around TrueForAll
+            //if (!customers.TrueForAll(x => x.ID == 106))
+            //{
+            //    customers.Add(new Customer { ID = 106, Name = "arbiter" });
+            //}
+
+            //foreach (var item in customers)
+            //{
+            //    Console.WriteLine(item.Name);
+            //}
+
+
+            //  mess around Sort delegate, pass lambdas
             Console.WriteLine("pass using the delegate keyword");
-            customers.Sort(delegate(Customer c1, Customer c2)
+            customers.Sort(delegate (Customer c1, Customer c2)
             { return c1.ID.CompareTo(c2.ID); });
 
 
@@ -119,35 +120,19 @@ namespace pragrimtech_c_sharp__vs_2019_
             //
             Console.WriteLine("pass a lambda");
             customers.Sort((x, y) => x.ID.CompareTo(y.ID));
+            customers.Reverse();
 
+            foreach (Customer item in customers)
+            {
+                Console.WriteLine(item.Name);
+            }
 
-        }
-
-        private static int CompareCustomer(Customer x, Customer y)
-        {
-            //  compare ID of Customer object x with y
-            //
-            return x.ID.CompareTo(y.ID);
         }
 
     }
 
 
-    //  in real time you may not own the class code but you need to change
-    //  the default Sort functionality, IComparer can be used which has a Compare method
-    //
-    public class SortByName : IComparer<Customer>
-    {
-        public int Compare(Customer x, Customer y)
-        {
-            //  Name is string so CompareTo can be used to return an int
-            return x.Name.CompareTo(y.Name);
-        }
-    }
-
-    //  implement IComparableInterface
-    //
-    public class Customer : IComparable<Customer>
+    public class Customer
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -155,38 +140,6 @@ namespace pragrimtech_c_sharp__vs_2019_
 
         public string Type { get; set; }
 
-        //  compare the instance of this class to the object passed with CompareTo
-        //  
-        //  if the number returned is > 0 than the instance is greater than the object
-        //  compared with
-        //  if < 0 than object is less, if 0 than equal
-        //
-        public int CompareTo(Customer other)
-        {
-            //if (this.Salary > other.Salary)
-            //{
-            //    return 1;
-            //}
-            //else if (this.Salary < other.Salary)
-            //{
-            //    return -1;
-            //}
-            //else
-            //{
-            //    return 0;
-            //}
-
-            //  as int already has a CompareTo the if check is not needed
-            //  and you can just compare to the Customer object salary passed
-            // 
-            //return this.Salary.CompareTo(other.Salary);
-
-            //  string also has CompareTo so Name can be used
-            //
-            //return this.Name.CompareTo(other.Name);
-
-            return this.Salary.CompareTo(other.Salary);
-        }
 
         #region
         public string FirstName { get; set; }
@@ -233,28 +186,21 @@ namespace pragrimtech_c_sharp__vs_2019_
             Console.WriteLine("Sum = " + result);
 
         }
-
-
         #endregion
 
-        public enum Names
-        {
-            Agent47 = 101,
-            IllidanStormrage = 102,
-            MasterChief = 103,
-            Warden = 104
-        }
 
+    }
 
-        public class SavingsCustomer : Customer
-        {
+    public enum Names
+    {
+        Agent47 = 101,
+        IllidanStormrage = 102,
+        MasterChief = 103,
+        Warden = 104
+    }
 
-        }
-
-
-
-
-
+    public class SavingsCustomer : Customer
+    {
 
     }
 
