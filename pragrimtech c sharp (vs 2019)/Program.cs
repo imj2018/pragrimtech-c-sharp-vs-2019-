@@ -58,7 +58,70 @@ namespace pragrimtech_c_sharp__vs_2019_
             };
 
 
+            //  objects will be added to the Queue one after another
+            //  with Enqueue
+            //
+            Queue<Customer> queueCustomers = new Queue<Customer>();
+            queueCustomers.Enqueue(customer1);
+            queueCustomers.Enqueue(customer2);
+            queueCustomers.Enqueue(customer3);
+            queueCustomers.Enqueue(customer4);
+            queueCustomers.Enqueue(customer5);
 
+            foreach (Customer c in queueCustomers)
+            {
+                Console.WriteLine(c.ID + " - " + c.Name);
+                Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            }
+            Console.WriteLine("");
+
+            //  Peek will return the item at the beginning of the Queue without
+            //  removing
+            //
+            Customer cp = queueCustomers.Peek();
+            Console.WriteLine(cp.ID + " - " + cp.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+
+            //  calling Peek again will still return the same object as it is not removed
+            //
+            Customer cp2 = queueCustomers.Peek();
+
+
+            //  Contains to check for a specific item like other collections
+            // 
+            if (queueCustomers.Contains(customer1))
+            {
+                Console.WriteLine("customer1 exists");
+            }
+            else 
+            {
+                Console.WriteLine("customer1 does not exist");
+            }
+
+
+            //  to return an item from a Queue use Dequeue this will also
+            //  remove the object at the beginning of the queue and then return
+            //  it. unlike List or Dictonary the item is still in the collection
+            //
+            Customer c1 = queueCustomers.Dequeue();
+            Console.WriteLine(c1.ID + " - " + c1.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+
+            Customer c2 = queueCustomers.Dequeue();
+            Console.WriteLine(c2.ID + " - " + c2.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+
+            Customer c3 = queueCustomers.Dequeue();
+            Console.WriteLine(c3.ID + " - " + c3.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            
+            Customer c4 = queueCustomers.Dequeue();
+            Console.WriteLine(c4.ID + " - " + c4.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+
+            Customer c5 = queueCustomers.Dequeue();
+            Console.WriteLine(c5.ID + " - " + c5.Name);
+            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
 
         }
 
@@ -100,9 +163,9 @@ namespace pragrimtech_c_sharp__vs_2019_
             }
 
             return
-                this.FirstName == ((Customer)obj).FirstName &&
-                this.LastName == ((Customer)obj).LastName;
-
+                //this.FirstName == ((Customer)obj).FirstName &&
+                //this.LastName == ((Customer)obj).LastName;
+                false;
         }
 
         public override int GetHashCode()
