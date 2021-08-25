@@ -5,6 +5,7 @@
         <title></title>
     </head>
         <div style="font-family:Arial; border:1px solid black; text-align:center; height: 250px;">
+            <br />
             <tr>
                 <td>
                    <b>Counter 1</b>
@@ -41,19 +42,19 @@
             <br />
             <tr>
                 <td>
-                   <asp:Button ID="btnCounter1" runat="server" Text="Next" OnClick="btnCounter1_Click" />
+                   <asp:Button ID="btnCounter1" runat="server" Text="Next" />
                 </td>
                 <td>
                     
                 </td>
                 <td> 
                     
-                    <asp:Button ID="btnCounter2" runat="server" Text="Next" OnClick="btnCounter2_Click" />
+                    <asp:Button ID="btnCounter2" runat="server" Text="Next" />
                 </td>
                 <td>
                 </td>
                 <td>
-                    <asp:Button ID="btnCounter3" runat="server" Text="Next" OnClick="btnCounter3_Click" />
+                    <asp:Button ID="btnCounter3" runat="server" Text="Next" />
                 </td>        
                 <td>              
             </tr>
@@ -66,7 +67,7 @@
             </tr>
                     <asp:ListBox ID="listTokens" runat="server"></asp:ListBox>
             <br />
-                    <asp:Button ID="btnPrintToken" runat="server" Text="Print Token" OnClick="btnPrintToken_Click" />
+                    <asp:Button ID="btnPrintToken" runat="server" Text="Print Token" />
             <br />
             <asp:Label ID="lblStatus" runat="server"></asp:Label>
             <br />
