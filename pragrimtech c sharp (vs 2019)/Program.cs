@@ -58,77 +58,75 @@ namespace pragrimtech_c_sharp__vs_2019_
             };
 
 
-            // Queue is a generic FIFO (First In First Out) collection class that is present in System.Collections.Generic namespace.
-            // The Queue collection class is analogous to a queue at the ATM machine to withdraw money. The order in which people queue up,
-            // will be the order in which they will be able to get out of the queue and withdraw money from the ATM. The Queue collection
-            // class operates in a similar fashion. The first item to be added (enqueued) to the queue, will be the first item to be removed
-            // (dequeued) from the Queue.
-
-
-            //  objects will be added to the Queue one after another
-            //  with Enqueue
-            //
-            Queue<Customer> queueCustomers = new Queue<Customer>();
-            queueCustomers.Enqueue(customer1);
-            queueCustomers.Enqueue(customer2);
-            queueCustomers.Enqueue(customer3);
-            queueCustomers.Enqueue(customer4);
-            queueCustomers.Enqueue(customer5);
-
-            foreach (Customer c in queueCustomers)
-            {
-                Console.WriteLine(c.ID + " - " + c.Name);
-                Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
-            }
-            Console.WriteLine("");
-
-            //  Peek will return the item at the beginning of the Queue without
-            //  removing
-            //
-            Customer cp = queueCustomers.Peek();
-            Console.WriteLine(cp.ID + " - " + cp.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
-
-            //  calling Peek again will still return the same object as it is not removed
-            //
-            Customer cp2 = queueCustomers.Peek();
-
-
-            //  Contains to check for a specific item like other collections
+            //  Stack is a generic LIFO (Last In First Out) collection class that is present in System.Collections.Generic namespace.
+            //  The Stack collection class is analogous to a stack of plates. If you want to add a new plate to the stack of plates,
+            //  you place it on top of all the already existing plates.If you want to remove a plate from the stack, you will first
+            //  remove the one that you have last added. The stack collection class also operates in a similar fashion. The last item
+            //  to be added (pushed) to the stack, will be the first item to be removed (popped) from the stack.
+            
+           
+            //  Push will push the item to the top of the stack over the existing i.e customer5 will   
+            //  be the last so it will be on top
             // 
-            if (queueCustomers.Contains(customer1))
+            Stack<Customer> stackCustomers = new Stack<Customer>();
+            stackCustomers.Push(customer1);
+            stackCustomers.Push(customer2);
+            stackCustomers.Push(customer3);
+            stackCustomers.Push(customer4);
+            stackCustomers.Push(customer5);
+
+
+            //  Peek works the same as Queue and will not remove the item
+            //  
+            Customer cp = stackCustomers.Peek();
+            Console.WriteLine(cp.ID + " - " + cp.Name);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
+
+            //  Contains will also do the same and check if the object exists and return
+            //  true or false
+            // 
+            if (stackCustomers.Contains(customer1))
             {
                 Console.WriteLine("customer1 exists");
             }
-            else 
+            else
             {
                 Console.WriteLine("customer1 does not exist");
             }
 
 
-            //  to return an item from a Queue use Dequeue this will also
-            //  remove the object at the beginning of the queue and then return
-            //  it. unlike List or Dictonary the item is still in the collection
+            foreach (Customer customer in stackCustomers)
+            {
+                Console.WriteLine(customer.ID + " - " + customer.Name);
+                Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
+            }
+            Console.WriteLine("");
+
+
+            //  Pop will return and then remove the item at the top of the stack
             //
-            Customer c1 = queueCustomers.Dequeue();
+            Customer c1 = stackCustomers.Pop();
             Console.WriteLine(c1.ID + " - " + c1.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
 
-            Customer c2 = queueCustomers.Dequeue();
+            Customer c2 = stackCustomers.Pop();
             Console.WriteLine(c2.ID + " - " + c2.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
 
-            Customer c3 = queueCustomers.Dequeue();
+            Customer c3 = stackCustomers.Pop();
             Console.WriteLine(c3.ID + " - " + c3.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
-            
-            Customer c4 = queueCustomers.Dequeue();
-            Console.WriteLine(c4.ID + " - " + c4.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
 
-            Customer c5 = queueCustomers.Dequeue();
+            Customer c4 = stackCustomers.Pop();
+            Console.WriteLine(c4.ID + " - " + c4.Name);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
+
+            Customer c5 = stackCustomers.Pop();
             Console.WriteLine(c5.ID + " - " + c5.Name);
-            Console.WriteLine("Total Items in the Queue = " + queueCustomers.Count);
+            Console.WriteLine("Items left in the stack = " + stackCustomers.Count);
+
+
+
 
         }
 
