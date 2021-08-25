@@ -124,8 +124,8 @@ namespace WebApplication1
             {
                 int tokenNumberToBeServed = tokenQueue.Dequeue();
                 textbox.Text = tokenNumberToBeServed.ToString();
-                textbox.Text = " Token number : " + tokenNumberToBeServed.ToString() +
-                    " Please go to counter " + counterNumber;
+                txtDisplay.Text = " Token number : " + tokenNumberToBeServed.ToString() +
+                    " Please go to counter " + counterNumber.ToString();
 
 
                 AddTokensToListBox(tokenQueue);
