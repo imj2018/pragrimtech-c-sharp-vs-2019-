@@ -32,33 +32,32 @@ namespace pragrimtech_c_sharp__vs_2019_
 
 
             Console.WriteLine("Please enter the target number");
-            object target = Console.ReadLine();
+            int target = Convert.ToInt32(Console.ReadLine());
 
-            Numbers numbers = new Numbers();
+            Number number = new Number(target);
 
-            //        ParameterizedThreadStart parameterizedThreadStart =
-            //new ParameterizedThreadStart(numbers.PrintNumbers);
-            //Thread T1 = new Thread(parameterizedThreadStart);
-
-            Thread T1 = new Thread(numbers.PrintNumbers);
-            T1.Start(target);
+            //Thread T1 = new Thread(new ThreadStart(number.PrintNumbers));
+            Thread T1 = new Thread(number.PrintNumbers);
+            T1.Start();
 
 
         }
-
+        
     }
 
-    public class Numbers
+    public class Number
     {
-        public void PrintNumbers(object target)
+        private int _target;
+
+        public Number(int target)
         {
-            int number = 0;
-            if (int.TryParse(target.ToString(), out number))
+            this._target = target;
+        }
+        public void PrintNumbers()
+        {
+            for (int i = 0; i <= _target; i++)
             {
-                for (int i = 0; i <= number; i++)
-                {
-                    Console.WriteLine(i);
-                }
+                Console.WriteLine(i);
             };
 
         }
