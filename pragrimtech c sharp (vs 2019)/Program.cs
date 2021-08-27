@@ -30,9 +30,18 @@ namespace pragrimtech_c_sharp__vs_2019_
             //Thread T1 = new Thread(()=> Numbers.PrintNumbers());
             //T1.Start();
 
+
+            Console.WriteLine("Please enter the target number");
+            object target = Console.ReadLine();
+
             Numbers numbers = new Numbers();
-            Thread T1 = new Thread(() => numbers.PrintNumbers());
-            T1.Start();
+
+            //        ParameterizedThreadStart parameterizedThreadStart =
+            //new ParameterizedThreadStart(numbers.PrintNumbers);
+            //Thread T1 = new Thread(parameterizedThreadStart);
+
+            Thread T1 = new Thread(numbers.PrintNumbers);
+            T1.Start(target);
 
 
         }
@@ -41,12 +50,17 @@ namespace pragrimtech_c_sharp__vs_2019_
 
     public class Numbers
     {
-        public void PrintNumbers()
+        public void PrintNumbers(object target)
         {
-            for (int i = 0; i <= 10; i++)
+            int number = 0;
+            if (int.TryParse(target.ToString(), out number))
             {
-                Console.WriteLine(i);
-            }
+                for (int i = 0; i <= number; i++)
+                {
+                    Console.WriteLine(i);
+                }
+            };
+
         }
     }
 
