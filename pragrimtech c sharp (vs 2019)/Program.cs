@@ -19,25 +19,26 @@ using System.Threading;
 /// </summary>
 namespace pragrimtech_c_sharp__vs_2019_
 {
+
+    public delegate void SumOfNumberCallback(int SumOfNumbers);
+
     public class Program
     {
+        public static void PrintSum(int sum)
+        {
+            Console.WriteLine("Sum of numbers = " + sum);
+        }
         public static void Main()
         {
-            //Thread T1 = new Thread(new ThreadStart(Numbers.PrintNumbers));
-            //Thread T1 = new Thread(delegate() {
-            //    Numbers.PrintNumbers();
-            //    });
-            //Thread T1 = new Thread(()=> Numbers.PrintNumbers());
-            //T1.Start();
-
 
             Console.WriteLine("Please enter the target number");
             int target = Convert.ToInt32(Console.ReadLine());
 
-            Number number = new Number(target);
+            SumOfNumberCallback callback = new SumOfNumberCallback(PrintSum);
 
-            //Thread T1 = new Thread(new ThreadStart(number.PrintNumbers));
-            Thread T1 = new Thread(number.PrintNumbers);
+            Number number = new Number(target, callback); 
+
+            Thread T1 = new Thread(number.PrintSumOrNumbers);
             T1.Start();
 
 
@@ -48,17 +49,31 @@ namespace pragrimtech_c_sharp__vs_2019_
     public class Number
     {
         private int _target;
+        SumOfNumberCallback _callBackMethod;
 
-        public Number(int target)
+        public Number(int target, SumOfNumberCallback callBackMethod)
         {
             this._target = target;
+            this._callBackMethod = callBackMethod;
         }
-        public void PrintNumbers()
+        public void PrintSumOrNumbers()
         {
+            int sum = 0;
             for (int i = 0; i <= _target; i++)
             {
-                Console.WriteLine(i);
+                sum += i;
+                //Console.WriteLine(i);
             };
+
+            //  hand the sum over to the _callBackMethod delegate
+            //  which is pointing to PrintSum which will just print
+            //  the sum
+            // 
+            if (_callBackMethod != null)
+            {
+                _callBackMethod(sum);
+            }
+
 
         }
     }
