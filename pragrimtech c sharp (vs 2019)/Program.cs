@@ -20,42 +20,69 @@ using System.Threading;
 namespace pragrimtech_c_sharp__vs_2019_
 {
 
-    public delegate void SumOfNumberCallback(int SumOfNumbers);
 
     public class Program
     {
-        public static void PrintSum(int sum)
-        {
-            Console.WriteLine("Sum of numbers = " + sum);
-        }
+
         public static void Main()
         {
-
-            Console.WriteLine("Please enter the target number");
-            int target = Convert.ToInt32(Console.ReadLine());
-
-            SumOfNumberCallback callback = new SumOfNumberCallback(PrintSum);
-
-            Number number = new Number(target, callback); 
-
-            Thread T1 = new Thread(number.PrintSumOrNumbers);
+            Console.WriteLine("Main Started");
+            Thread T1 = new Thread(Thread1Function);
             T1.Start();
 
+            Thread T2 = new Thread(Thread2Function);
+            T2.Start();
 
+            if (T1.Join(1000))
+            {
+                Console.WriteLine("Thread1Function Completed");
+            }
+            else
+            {
+                Console.WriteLine("Thread1Function has not completed in 1 second");
+            }
+
+
+            T2.Join();
+            Console.WriteLine("Thread2Function Completed");
+
+            for (int i = 0; i <= 10; i++)
+            {
+                if (T1.IsAlive)
+                {
+                    Console.WriteLine("Thread1Function is still alive...");
+                    Thread.Sleep(500);
+                }
+                else
+                {
+                    Console.WriteLine("Thread1Function Completed");
+                    break;
+                }
+            }
+
+
+            Console.WriteLine("Main Completed");
         }
-        
+
+        public static void Thread1Function()
+        {
+
+            Console.WriteLine("Thread1Function started");
+            Thread.Sleep(5000);
+            Console.WriteLine("Thread1Function is about to return");
+        }
+
+        public static void Thread2Function()
+        {
+            Console.WriteLine("Thread2Function started");
+        }
+
+
     }
 
     public class Number
     {
         private int _target;
-        SumOfNumberCallback _callBackMethod;
-
-        public Number(int target, SumOfNumberCallback callBackMethod)
-        {
-            this._target = target;
-            this._callBackMethod = callBackMethod;
-        }
         public void PrintSumOrNumbers()
         {
             int sum = 0;
@@ -64,16 +91,6 @@ namespace pragrimtech_c_sharp__vs_2019_
                 sum += i;
                 //Console.WriteLine(i);
             };
-
-            //  hand the sum over to the _callBackMethod delegate
-            //  which is pointing to PrintSum which will just print
-            //  the sum
-            // 
-            if (_callBackMethod != null)
-            {
-                _callBackMethod(sum);
-            }
-
 
         }
     }
