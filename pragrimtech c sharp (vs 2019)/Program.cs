@@ -12,6 +12,7 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Diagnostics;
 
 /// <summary>
 /// 
@@ -23,62 +24,59 @@ namespace pragrimtech_c_sharp__vs_2019_
 
     public class Program
     {
-
+        static int Total = 0;
         public static void Main()
         {
-            Console.WriteLine("Main Started");
-            Thread T1 = new Thread(Thread1Function);
+
+            //AddOneMillion();
+            //AddOneMillion();
+            //AddOneMillion();
+
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            Thread T1 = new Thread(AddOneMillion);
+            Thread T2 = new Thread(AddOneMillion);
+            Thread T3 = new Thread(AddOneMillion);
+
             T1.Start();
-
-            Thread T2 = new Thread(Thread2Function);
             T2.Start();
+            T3.Start();
 
-            if (T1.Join(1000))
-            {
-                Console.WriteLine("Thread1Function Completed");
-            }
-            else
-            {
-                Console.WriteLine("Thread1Function has not completed in 1 second");
-            }
-
-
+            T1.Join();
             T2.Join();
-            Console.WriteLine("Thread2Function Completed");
+            T3.Join();
 
-            for (int i = 0; i <= 10; i++)
+
+            Console.WriteLine("Total = " + Total);
+
+            stopWatch.Stop();
+            Console.WriteLine(stopWatch.ElapsedTicks);
+
+            //Console.WriteLine(TimeSpan.);
+
+        }
+
+        static object _lock = new object();
+
+        private static void AddOneMillion()
+        {
+            for (int i = 1; i <= 1000000; i++)
             {
-                if (T1.IsAlive)
-                {
-                    Console.WriteLine("Thread1Function is still alive...");
-                    Thread.Sleep(500);
-                }
-                else
-                {
-                    Console.WriteLine("Thread1Function Completed");
-                    break;
-                }
+                //Total++;
+                Interlocked.Increment(ref Total);
+
+                //lock(_lock)
+                //{
+                //    Total++;
+                //}
+
+
+
             }
-
-
-            Console.WriteLine("Main Completed");
         }
-
-        public static void Thread1Function()
-        {
-
-            Console.WriteLine("Thread1Function started");
-            Thread.Sleep(5000);
-            Console.WriteLine("Thread1Function is about to return");
-        }
-
-        public static void Thread2Function()
-        {
-            Console.WriteLine("Thread2Function started");
-        }
-
-
     }
+
+
+
 
     public class Number
     {
