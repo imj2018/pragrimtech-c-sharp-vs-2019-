@@ -62,12 +62,17 @@ namespace pragrimtech_c_sharp__vs_2019_
             for (int i = 1; i <= 1000000; i++)
             {
                 //Total++;
-                Interlocked.Increment(ref Total);
+                //Interlocked.Increment(ref Total);
 
-                //lock(_lock)
-                //{
-                //    Total++;
-                //}
+                Monitor.Enter(_lock);
+                try
+                {
+                    Total++;
+                }
+                finally
+                {
+                    Monitor.Exit(_lock);
+                }
 
 
 
