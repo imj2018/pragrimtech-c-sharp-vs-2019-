@@ -27,62 +27,60 @@ namespace pragrimtech_c_sharp__vs_2019_
 
         public static void Main()
         {
-            Console.WriteLine("Processor Count = " + Environment.ProcessorCount);
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            EvenNumbersSum();
-            OddNumbersSum();
-            stopwatch.Stop();
-            Console.WriteLine("Total milliseconds without multiple threads = "
-                + stopwatch.ElapsedMilliseconds);
-
-            stopwatch = Stopwatch.StartNew();
-            Thread T1 = new Thread(EvenNumbersSum);
-            Thread T2 = new Thread(OddNumbersSum);
-
-            T1.Start();
-            T2.Start();
-
-            //  to wait for Threads to finish
-            //  
-            T1.Join();
-            T2.Join();
-
-            stopwatch.Stop();
-
-            Console.WriteLine("Total milliseconds with multiple threads = "
-                + stopwatch.ElapsedMilliseconds);
-
-        }
-
-        public static void EvenNumbersSum()
-        {
-            double sum = 0;
-            for (int i = 0; i <= 50000000; i++)
+            List<Employee> listEmployees = new List<Employee>()
             {
-                if (i % 2 == 0)
-                {
-                    sum += i;
-                }
+                new Employee() { ID = 101, Name = "Mark"},
+                new Employee() { ID = 102, Name = "John"},
+                new Employee() { ID = 103, Name = "Mary"},
 
-            }
-            Console.WriteLine("Sum of even numbers = {0}", sum);
-        }
+            };
 
-        public static void OddNumbersSum()
-        {
-            double sum = 0;
-            for (int i = 0; i <= 50000000; i++)
+            //  created an instance of a delegate pointing to a method,
+            //  Predicate requires a method that matches i.e returns bool
+            //  and expects and object of type Employee as a parameter
+            //
+            // Step 2
+            //Predicate<Employee> employeePredicate = 
+            //    new Predicate<Employee>(FindEmployee);
+
+            // Step 3
+            //Employee employee = listEmployees.Find(emp => FindEmployee(emp));
+
+            //  anonymous method
+            Employee employee = listEmployees.Find(delegate(Employee emp)
             {
-                if (i % 2 == 1)
-                {
-                    sum += i;
-                }
+                return emp.ID == 102;
+            });
 
-            }
-            Console.WriteLine("Sum of odd numbers = {0}", sum);
+            Console.WriteLine(" Id = {0}, Name = {1}", employee.ID, employee.Name);
+
+            
         }
+
+        // Step 1
+        //public static bool FindEmployee(Employee emp)
+        //{
+        //    return emp.ID == 102;
+        //}
+
     }
+
+    public class Employee
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public class AccountManager
     {
