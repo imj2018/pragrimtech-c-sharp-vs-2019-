@@ -92,25 +92,42 @@ namespace pragrimtech_c_sharp__vs_2019_
         }
         public void Transfer()
         {
-            Console.WriteLine(Thread.CurrentThread.Name + " trying to acquire lock on " +
-                _fromAccount.ID.ToString());
 
-            lock (_fromAccount)
+            object _lock1, _lock2;
+
+            if (_fromAccount.ID < _toAccount.ID)
+            {
+                _lock1 = _fromAccount;
+                _lock2 = _toAccount;
+            }
+            else
+            {
+                _lock1 = _toAccount;
+                _lock2 = _fromAccount;
+            }
+
+            Console.WriteLine(Thread.CurrentThread.Name + " trying to acquire lock on " +
+                ((Account)_lock1).ID.ToString());
+
+            lock (_lock1)
             {
                 Console.WriteLine(Thread.CurrentThread.Name + " acquire lock on " +
-                    _fromAccount.ID.ToString());
+                    ((Account)_lock1).ID.ToString());
 
                 Console.WriteLine(Thread.CurrentThread.Name + " suspend for 1 second");
                 Thread.Sleep(1000);
 
                 Console.WriteLine(Thread.CurrentThread.Name + " back in action and trying to acquire lock on " +
-                    _toAccount.ID.ToString());
+                   ((Account)_lock2).ID.ToString());
 
-                lock (_toAccount)
+                lock (_lock2)
                 {
-                    Console.WriteLine("This code will not be executed");
+                    Console.WriteLine(Thread.CurrentThread.Name + " acquire lock on " +
+                 ((Account)_lock2).ID.ToString());
                     _fromAccount.Withdraw(_amountToTransfer);
                     _toAccount.Deposit(_amountToTransfer);
+                    Console.WriteLine(Thread.CurrentThread.Name + " Transferred " + _amountToTransfer.ToString() +
+                        " from " + _fromAccount.ToString() + " to " + _toAccount.ID.ToString());
 
                 }
             }
