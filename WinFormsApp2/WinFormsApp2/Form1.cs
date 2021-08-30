@@ -30,8 +30,21 @@ namespace WinFormsApp2
 
             //  as the parameters are not being used there is no need
             //  to use them
-            //  
-            button1.Click += delegate
+            //
+            //button1.Click += delegate            
+
+            //  it is automatically inferring the EventHandler delegate
+            //        
+            //button1.Click += (object eventSender, EventArgs EventArgs) =>
+
+            //  input parameter types are automatically inferred
+            // 
+            //button1.Click += (eventSender, eventArgs) =>
+            
+            //  unlike anonymous methods, it won't accept no parameters with lambdas
+            //  whether they are omitted in the body or not
+            //button1.Click += () =>
+            button1.Click += (eventSender, eventArgs) =>
             {
                 MessageBox.Show("Hello, you just clicked me");
             };
