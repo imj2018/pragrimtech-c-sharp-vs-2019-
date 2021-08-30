@@ -24,55 +24,63 @@ namespace pragrimtech_c_sharp__vs_2019_
 
     public class Program
     {
-        static int Total = 0;
+
         public static void Main()
         {
-            Console.WriteLine("Main Started");
-            Account accountA = new Account(101, 5000);
-            Account accountB = new Account(102, 3000);
+            Console.WriteLine("Processor Count = " + Environment.ProcessorCount);
 
-            AccountManager accountManagerA = 
-                new AccountManager(accountA, accountB, 1000);
-            Thread T1 = new Thread(accountManagerA.Transfer);
-            T1.Name = "T1";
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            EvenNumbersSum();
+            OddNumbersSum();
+            stopwatch.Stop();
+            Console.WriteLine("Total milliseconds without multiple threads = "
+                + stopwatch.ElapsedMilliseconds);
 
-            AccountManager accountManagerB =
-                new AccountManager(accountB, accountA, 2000);
-            Thread T2 = new Thread(accountManagerB.Transfer);
-            T2.Name = "T2";
+            stopwatch = Stopwatch.StartNew();
+            Thread T1 = new Thread(EvenNumbersSum);
+            Thread T2 = new Thread(OddNumbersSum);
 
             T1.Start();
             T2.Start();
 
+            //  to wait for Threads to finish
+            //  
             T1.Join();
             T2.Join();
-            Console.WriteLine("Main Completed");
 
+            stopwatch.Stop();
+
+            Console.WriteLine("Total milliseconds with multiple threads = "
+                + stopwatch.ElapsedMilliseconds);
 
         }
 
-        static object _lock = new object();
-
-        private static void AddOneMillion()
+        public static void EvenNumbersSum()
         {
-            for (int i = 1; i <= 1000000; i++)
+            double sum = 0;
+            for (int i = 0; i <= 50000000; i++)
             {
-                //Total++;
-                //Interlocked.Increment(ref Total);
-
-                Monitor.Enter(_lock);
-                try
+                if (i % 2 == 0)
                 {
-                    Total++;
+                    sum += i;
                 }
-                finally
-                {
-                    Monitor.Exit(_lock);
-                }
-
-
 
             }
+            Console.WriteLine("Sum of even numbers = {0}", sum);
+        }
+
+        public static void OddNumbersSum()
+        {
+            double sum = 0;
+            for (int i = 0; i <= 50000000; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    sum += i;
+                }
+
+            }
+            Console.WriteLine("Sum of odd numbers = {0}", sum);
         }
     }
 
