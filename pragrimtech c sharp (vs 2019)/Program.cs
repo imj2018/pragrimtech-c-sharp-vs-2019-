@@ -15,7 +15,7 @@ using System.Threading;
 using System.Diagnostics;
 
 /// <summary>
-/// 
+///
 /// 
 /// </summary>
 namespace pragrimtech_c_sharp__vs_2019_
@@ -35,33 +35,32 @@ namespace pragrimtech_c_sharp__vs_2019_
 
             };
 
-            //  created an instance of a delegate pointing to a method,
-            //  Predicate requires a method that matches i.e returns bool
-            //  and expects and object of type Employee as a parameter
-            //
-            // Step 2
-            //Predicate<Employee> employeePredicate = 
-            //    new Predicate<Employee>(FindEmployee);
 
-            // Step 3
-            //Employee employee = listEmployees.Find(emp => FindEmployee(emp));
 
-            //  anonymous method
-            Employee employee = listEmployees.Find(delegate(Employee emp)
-            {
-                return emp.ID == 102;
-            });
+            //  "Find emp goes to... the type is being automatically inferred"
+            //  more convenient and supersede anonymous methods
+            // 
+            //Employee employee = listEmployees.Find(emp => emp.ID == 102);
+
+            //  x is the input parameter name, => is the lambda operator,
+            //  x.ID == 102 is the expersion
+            // 
+            //Employee employee = listEmployees.Find(x => x.ID == 102);
+
+
+            //  to be explicit and denote the type in brackets you can use (Employee emp)
+            //  
+            Employee employee = listEmployees.Find((Employee emp) => emp.ID == 102);
 
             Console.WriteLine(" Id = {0}, Name = {1}", employee.ID, employee.Name);
 
+            //  LINQ 
+            // 
+            int count = listEmployees.Count(x => x.Name.StartsWith("M"));
+            Console.WriteLine("Count = " + count);
+
             
         }
-
-        // Step 1
-        //public static bool FindEmployee(Employee emp)
-        //{
-        //    return emp.ID == 102;
-        //}
 
     }
 
