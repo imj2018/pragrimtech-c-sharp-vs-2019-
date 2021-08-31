@@ -21,57 +21,64 @@ using System.Diagnostics;
 namespace pragrimtech_c_sharp__vs_2019_
 {
 
-    interface ICustomer1
+    interface I1
     {
-        void Print1();
+        void InterfaceMethod();
     }
 
-    interface ICustomer2 : ICustomer1
+    interface I2
     {
-        void Print2();
+        void InterfaceMethod();
     }
 
-
-    //  if an interface implements other interfaces and your 
-    //  class inherits from that interface, it must implement those
-    //  members in the inheritance chain i.e Customer must implement Print1 and Print2
-    //
-    public class Customer : ICustomer2
+    //  both classes have the same method/method name 
+    //  there is ambiguity as to which method is implemented
+    //  .NET assumes both have been implemented
+    // 
+    public class Program : I1, I2
     {
-        public void Print1()
+
+        //  explicitely implement, remove the access modifier
+        //  then the interface name followed by .
+        //  
+        //void I1.InterfaceMethod()
+        //{
+        //    Console. WriteLine("I1 Interface Method");
+        //}
+
+        //  if implemented normally it will become the default implementation
+        //
+        public void InterfaceMethod()
         {
-            Console.WriteLine("Print1");
+            Console.WriteLine("I1 Interface Method");
         }
 
-        public void Print2()
+        void I2.InterfaceMethod()
         {
-            Console.WriteLine("Print2");
+            Console.WriteLine("I2 Interface Method");
         }
-    }
-
-
-    public class Program
-    {
 
         public static void Main()
         {
-            //Customer c1 = new Customer();
-            //c1.Print1();
-            //c1.Print2();
+            Program P = new Program();
+            P.InterfaceMethod();
 
-            //  cannot create an instance of an interface but a reference variable
-            //  can point to a derived object
+            //  could type cast to be clear which is implemented
+            //            
+            ((I1)P).InterfaceMethod();
+            ((I2)P).InterfaceMethod();
+
+            //  .NET will not allow P.InterfaceMethod();
+            //  because of ambiguity, the interface variable must be used 
             //
-            //  Print1 is only available to Customer1, Print2 is not available
-            //  yet as it is not derived
-            ICustomer1 cust1 = new Customer();
-            cust1.Print1();
+            //  alernatively to type casting
+            //
+            I2 p2 = new Program();
+            p2.InterfaceMethod();
 
-            ICustomer2 cust = new Customer();
-            cust.Print1();
-            cust.Print2();
 
         }
+
 
     }
 
