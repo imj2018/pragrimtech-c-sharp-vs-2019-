@@ -21,70 +21,56 @@ using System.Diagnostics;
 namespace pragrimtech_c_sharp__vs_2019_
 {
 
-    interface ICustomer
+    interface ICustomer1
     {
-
-        //  cannot have fields
-        //int ID;
-
-
-        //  can only have declarations
-        // 
-        //  are public by default cannot use other access modifiers
-        //
-        //private void Print();
-        void Print();
-
-
-        //  cannot have impementation in Interfaces
-        //  
-        //Console.WriteLine("Hello");
+        void Print1();
     }
 
-    interface I2
+    interface ICustomer2 : ICustomer1
     {
-        void I2Method();
+        void Print2();
     }
 
-    //  multiple interface inheritance is allowed
+
+    //  if an interface implements other interfaces and your 
+    //  class inherits from that interface, it must implement those
+    //  members in the inheritance chain i.e Customer must implement Print1 and Print2
     //
-    public class Customer : ICustomer, I2
+    public class Customer : ICustomer2
     {
-
-        //  must provide implementation for Interface members
-        //  
-        //  signature method must match Interface method
-        //public void Print(int Name)
-
-        public void Print()
+        public void Print1()
         {
-            Console.WriteLine("Interface Print Method");
+            Console.WriteLine("Print1");
         }
 
-        public void I2Method()
+        public void Print2()
         {
-            Console.WriteLine("I2 Method");
+            Console.WriteLine("Print2");
         }
     }
 
-    public class Sample 
-    {
-
-    }
-
-
-    //  multiple class inheritance is not allowed
-    //
-    //public class Program : Customer, Sample
 
     public class Program
     {
 
         public static void Main()
         {
-            ICustomer c1 = new Customer();
-            c1.Print();
-            
+            //Customer c1 = new Customer();
+            //c1.Print1();
+            //c1.Print2();
+
+            //  cannot create an instance of an interface but a reference variable
+            //  can point to a derived object
+            //
+            //  Print1 is only available to Customer1, Print2 is not available
+            //  yet as it is not derived
+            ICustomer1 cust1 = new Customer();
+            cust1.Print1();
+
+            ICustomer2 cust = new Customer();
+            cust.Print1();
+            cust.Print2();
+
         }
 
     }
