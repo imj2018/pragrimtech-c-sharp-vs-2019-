@@ -33,34 +33,41 @@ namespace WinFormsApp3
             return count;
         }
 
-        //  blocking i.e during execution we cannot see the status message, move
-        //  the text box around etc 
-        // 
-        //private void btnProcessFile_Click(object sender, EventArgs e)
+        int characterCount = 0;
 
-        //  non blocking i.e async to call the method asynchronously  
-        private async void btnProcessFile_Click(object sender, EventArgs e)
+
+        //  "asynchronous implmentation is very with Task compared with Thread"
+        // 
+        private void btnProcessFile_Click(object sender, EventArgs e)
         {
-            //  Task to offload the CountCharacters which will execute the method
-            // 
-            Task<int> task = new Task<int>(CountCharacters);
-            task.Start(); 
+            //int count = 0;
+            Thread thread = new Thread(() => {
+                characterCount = CountCharacters();
+
+                //  "the thread that has created the control should only
+                //  be modifying it's properties"
+                //lblCount.Text = count.ToString() + " characters in file";
+
+                //  BeginInvoke will ask the UI thread to execute asynchronously
+                //Action action = () => lblCount.Text = count.ToString() + " characters in file";
+                //this.BeginInvoke(action);
+
+                //  re-write as a delegate, that may be easier to read
+                Action action = new Action(SetLabelTextProperty);
+                this.BeginInvoke(action);
+
+
+            });
+            thread.Start();
 
             lblCount.Text = "Processing File. Please wait...";
+            //thread.Join();
+            
+        }
 
-            //int count = CountCharacters();
-
-            //  await as we need to wait for the task to complete at this points
-            //  then return
-            // 
-            //  "await keyword specifies a suspension point, the await operator signals
-            //  that the async method can't continue passed that point until the awaited
-            //  process is complete. In the meantime control returns to caller of the async
-            //  method"
-            // 
-            int count = await task;
-
-            lblCount.Text = count.ToString() + " characters in file";
+        private void SetLabelTextProperty()
+        {
+            lblCount.Text = characterCount.ToString() + " characters in file";
         }
     }
 }
