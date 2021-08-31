@@ -20,83 +20,72 @@ using System.Diagnostics;
 /// </summary>
 namespace pragrimtech_c_sharp__vs_2019_
 {
-
-    interface I1
+    //  an abstract class cannot be sealed 
+    //
+    //public abstract sealed class Customer
+    public abstract class Customer
     {
-        void InterfaceMethod();
-    }
-
-    interface I2
-    {
-        void InterfaceMethod();
-    }
-
-    //  both classes have the same method/method name 
-    //  there is ambiguity as to which method is implemented
-    //  .NET assumes both have been implemented
-    // 
-    public class Program : I1, I2
-    {
-
-        //  explicitely implement, remove the access modifier
-        //  then the interface name followed by .
+        //  when marked as abstract there can no longer 
+        //  be implementation details 
         //  
-        //void I1.InterfaceMethod()
+        //public abstract void Print()
         //{
-        //    Console. WriteLine("I1 Interface Method");
+
         //}
 
-        //  if implemented normally it will become the default implementation
-        //
-        public void InterfaceMethod()
+        public abstract void Print();
+
+        //  abstract classes are not required to have abstract members
+        //  
+        public void PrintNonAbstract()
         {
-            Console.WriteLine("I1 Interface Method");
-        }
-
-        void I2.InterfaceMethod()
-        {
-            Console.WriteLine("I2 Interface Method");
-        }
-
-        public static void Main()
-        {
-            Program P = new Program();
-            P.InterfaceMethod();
-
-            //  could type cast to be clear which is implemented
-            //            
-            ((I1)P).InterfaceMethod();
-            ((I2)P).InterfaceMethod();
-
-            //  .NET will not allow P.InterfaceMethod();
-            //  because of ambiguity, the interface variable must be used 
-            //
-            //  alernatively to type casting
-            //
-            I2 p2 = new Program();
-            p2.InterfaceMethod();
-
-
+            Console.WriteLine("Print");
         }
 
 
     }
 
+    //  like in interfaces abstract members must be implemented
+    //  
+    //public class Program : Customer
 
+    //  mark as abstract and it won't require implementation
+    //
+    //public abstract class Program : Customer
+    public class Program : Customer
+    {
+        public static void Main()
+        {
+            //  an abstract class can only be used as a base class like
+            //  an interface an instance cannot be created but an abstract
+            //  class reference variable can point to a derived object
+            //
+            Customer c = new Program();
+            c.Print();
+            c.PrintNonAbstract();
 
+        }
 
+        public override void Print()
+        {
+            Console.WriteLine("Print Method");
+        }
+    }
 
-
-
-
-
-
-
-
-   
-
-
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
